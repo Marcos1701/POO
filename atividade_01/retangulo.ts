@@ -2,7 +2,7 @@
 adicional chamado que calcule o perímetro do retângulo e altere a classe
 TestaRetangulo para exibir o cálculo do perímetro.*/
 
-class retangulo{
+class Retangulo{
   l1: number = 0
   l2: number = 0
 
@@ -15,3 +15,17 @@ class retangulo{
   }
 
 }
+
+function main(){
+  
+  const retangulo = new Retangulo
+
+  retangulo.l1 = 4
+  retangulo.l2 = 6
+
+  console.log(`Área : ${retangulo.calcularArea()}`)
+  console.log(`Perimetro : ${retangulo.calcularPerimetro()}`)
+
+}
+
+main()
