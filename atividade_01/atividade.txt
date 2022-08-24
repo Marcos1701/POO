@@ -54,6 +54,9 @@ R- a resposta está no arquivo: "retangulo.ts"
 calculam a área e o perímetro. Instancie um objeto dessa classe, atribua um valor
 ao raio e exiba a área e o perímetro chamando os dois métodos definidos.
 R- a resposta está no arquivo: "circulo.ts"
+/* int x = 0;
+   int b = 1;
+*/
 
 9. Crie uma classe chamada SituacaoFinanceira com os atributos valorCreditos e
 valorDebitos. Crie um método chamado saldo() que retorna/calcula a diferença
