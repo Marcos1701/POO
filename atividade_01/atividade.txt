@@ -1,0 +1,12 @@
+1. Qual a diferença entre objetos e classes? Exemplifique.
+R- As classes são um prototico ou um modelo de dados e o objeto seria essa classe materializada/em execução com os devidos atributos,
+R- por exemplo, a classe funcionaria como um projeto de uma casa, a casa já construída seria o objeto, nesse sentido, uma classe pode
+R- gerar mais de um objeto e um objeto advem de uma classe específica.
+
+2. De forma breve, conceitue atributos e métodos. Pesquise e exemplifique um
+exemplo de objeto que possua atributos e métodos (notação livre).
+R- O atributos são as caracteristicas da classe e são comuns em todos os objetos advindos dessa classe e podem apresentar valores
+R- diferentes, já os métodos são as ações que um objeto pode realizar quando solicitado. Um exemplo seria uma classe chamada "Conta",
+R- cria-se um objeto chamado "conta", onde seus atributos seriam o "nome do titular, o cpf do titular e o saldo da conta" e os metodos 
+R- seriam "inserir saldo, retirar saldo e visualizar saldo".
+
