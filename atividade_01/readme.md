@@ -17,14 +17,20 @@ um atributo de uma pessoa pode ser importante ou não dependendo do contexto
 do sistema. Enumere na tabela abaixo contextos/sistemas distintos em que os              
 atributos abaixo seriam relevantes:**
 
-| Atriburo             | Sistema em que é importante |
-|Peso                  |  
-|Tipo de CNH           |  
-|Tipo Sanguíneo        |  de um hospital, para doação e recebimento de sangue..
-|Habilidade destra     |  
-|Percentual de gordura |  
-|Saldo em conta        |  Bancário/de um banco
-|Etinia                |    
+|Atributo--|--sistema em que é importante
+|Peso------------------|=> De uma academia, para comparar ou analisar os resultados.. 
+
+|Tipo de CNH-----------|=> De uma empresa de distribuição de produtos ou o do proprio detran
+
+|Tipo Sanguíneo--------|=> De um Hospital             
+
+|Habilidade destra----  -|=> Uma escola (não sei ao certo...)  
+
+|Percentual de gordura-|=> De análise nutricional            
+
+|Saldo em conta---------|=> Bancário/de um banco          
+
+|Etinia-----------------|=> Sei não             
 
 **4. Considerando os objetos Pessoa e Conta             :**
 
@@ -37,7 +43,7 @@ R- Sim.
 uma conta como atributo? Que elemento da programação estruturada melhor
 representaria o conjunto de contas de uma pessoa?*
 
-R-
+R- um vetor, se não me engano..
 
 **5. Identifique pelo menos 5 objetos de um sistema de controle acadêmico. Ex: aluno.**
 
@@ -47,7 +53,7 @@ R- Aluno, Professor, Matricula, Funcionario e Aula.
 características (atributos) e comportamentos (métodos) que os mesmos poderiam
 ter**
 
-R- um jogo de futebol, por exemplo, precisaria do objeto Jogador, com os atributos de nome,
+R- Em um jogo de futebol, por exemplo, precisaria do objeto Jogador, com os atributos de nome,
  velocidade, numero e seus metodos seriam correr, chutar, passar a bola, etc,
  além desse poderia haver o objeto Tecnico, com os atributos de nome, experiencia, times por 
  onde passou e seus metodos seriam o comando ou a administracao do time, etc..
