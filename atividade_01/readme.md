@@ -32,7 +32,7 @@ atributos abaixo seriam relevantes:**
 
 |Saldo em conta---------|=> Bancário/de um banco          
 
-|Etinia-----------------|=> Sei não             
+|Etinia-----------------|=> Sistema de Cotas             
 
 **4. Considerando os objetos Pessoa e Conta             :**
 
