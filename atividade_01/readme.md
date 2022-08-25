@@ -18,8 +18,9 @@ um atributo de uma pessoa pode ser importante ou não dependendo do contexto
 do sistema. Enumere na tabela abaixo contextos/sistemas distintos em que os              
 atributos abaixo seriam relevantes:**
 
-|Atributo--|--sistema em que é importante
-|Peso------------------|=> De uma academia, para comparar ou analisar os resultados.. 
+|Atributo---------------|--sistema em que é importante
+
+|Peso------------------|=> De uma academia, para comparar ou analisar os resultados obtidos com o tempo.. 
 
 |Tipo de CNH-----------|=> De uma empresa de distribuição de produtos ou o do proprio detran
 
