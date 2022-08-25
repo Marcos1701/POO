@@ -79,5 +79,5 @@ atributos e exiba o resultado do método saldo().**
 
 R- a resposta está no arquivo: "situ_finan.ts"
 
-**10. Represente as classes das questões 8 e 9 no formato UML.**
+**10. Represente as classes das questões 8 e 9 no formato UML                        .**
 R- a resposta está na pasta "Q_10"
