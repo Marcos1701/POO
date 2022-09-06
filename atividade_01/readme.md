@@ -45,7 +45,7 @@ R- Sim.
 uma conta como atributo? Que elemento da programação estruturada melhor
 representaria o conjunto de contas de uma pessoa?*
 
-R- um vetor, se não me engano..
+R- Sim, um tipo de ponteiro que relacionaria as informações, se não me engano..
 
 **5. Identifique pelo menos 5 objetos de um sistema de controle acadêmico. Ex: aluno.**
 
