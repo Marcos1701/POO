@@ -26,7 +26,7 @@ my preffered language is TypeScript**
 
 **8. Configure o seu arquivo de configuração do TypeScript com as seguintes opções                                   :**
 
-**a. Alterar o local em que os arquivos *.js são gerados para a pasta build                                          ;**
+**a. Alterar o local em que os arquivos '*.js' são gerados para a pasta build                                          ;**
 
 **b. allowUnreachableCode com valor true                                                                             ;**
 https://www.typescriptlang.org/pt/tsconfig#allowUnreachableCode
