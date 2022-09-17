@@ -26,15 +26,19 @@ my preffered language is TypeScript**
 
 **8. Configure o seu arquivo de configuração do TypeScript com as seguintes opções                                   :**
 
-**a. Alterar o local em que os arquivos '*.js' são gerados para a pasta build;               //alterei.                .**
+**a. Alterar o local em que os arquivos '*.js' são gerados para a pasta build;                                        .**
+ //alterei.                                                                                                                   
 
-**b. allowUnreachableCode com valor true ;                                                  // ativei..               .**
-https://www.typescriptlang.org/pt/tsconfig#allowUnreachableCode
+**b. allowUnreachableCode com valor true ;                                                                             .**
+https://www.typescriptlang.org/pt/tsconfig#allowUnreachableCode                                                                   
+// ativei..                                                                          
 
-**c. noImplicitAny com valor true.                                                          //ativei..                 .**
-https://www.typescriptlang.org/pt/tsconfig#noImplicitAny
+**c. noImplicitAny com valor true.                                                                                     .**
+https://www.typescriptlang.org/pt/tsconfig#noImplicitAny                                                          
+//ativei..                                                                                                
 
 **d. target com o valor ES3. Além disso, utilize a classe do exercício anterior e                                               
-veja como ela é transpilada para JS;                                                       //alterei e conferi..       .**
+veja como ela é transpilada para JS;                                                                                    .**
+//alterei e conferi..                                                                                                                      
 
 **e. strictNullChecks para true e crie um exemplo que mostre a restrição                                                .**
