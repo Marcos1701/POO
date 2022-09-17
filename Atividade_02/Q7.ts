@@ -8,7 +8,6 @@ and
 my preffered language is TypeScript
 */
 
-```
 const nome: String = "Ely"
 const payment_time: number = 120.56
 const language: String = "TypeScript"
@@ -19,4 +18,3 @@ and
 my preffered language is ${language}`
 
 console.log(retorno)
-```
