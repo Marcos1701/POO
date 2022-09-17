@@ -24,16 +24,17 @@ and
 my preffered language is TypeScript**
 
 
-**8. Configure o seu arquivo de configuração do TypeScript com as seguintes opções:
-a. Alterar o local em que os arquivos *.js são gerados para a pasta build;**
+**8. Configure o seu arquivo de configuração do TypeScript com as seguintes opções                                   :**
 
-**b. allowUnreachableCode com valor true;**
+**a. Alterar o local em que os arquivos *.js são gerados para a pasta build                                          ;**
+
+**b. allowUnreachableCode com valor true                                                                             ;**
 https://www.typescriptlang.org/pt/tsconfig#allowUnreachableCode
 
-**c. noImplicitAny com valor true**
+**c. noImplicitAny com valor true                                                                                     .**
 https://www.typescriptlang.org/pt/tsconfig#noImplicitAny
 
-**d. target com o valor ES3. Além disso, utilize a classe do exercício anterior e
-veja como ela é transpilada para JS;**
+**d. target com o valor ES3. Além disso, utilize a classe do exercício anterior e                                               
+veja como ela é transpilada para JS                                                                                    ;**
 
-**e. strictNullChecks para true e crie um exemplo que mostre a restrição**
+**e. strictNullChecks para true e crie um exemplo que mostre a restrição                                                .**
