@@ -1,0 +1,5 @@
+2. Qual o principal problema do uso de tipagem dinâmica?
+
+R- A maior chance de erros por conta do reúso e de que as variáveis podem receber
+R- dados de quaisquer tipos e dessa forma havendo a possilidade de erro na execução
+R- do programa.
