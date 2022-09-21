@@ -8,31 +8,28 @@
 import Prompt from 'prompt-sync'
 const input = Prompt()
 
-function gerar_saudacao(nome: string, pronome: string = "M"): string{
+function gerar_saudacao(nome: string, pronome: string = "M"): string {
 
-    if(pronome === "Masc"){
+    if (pronome === "M") {
         return `Olá Sr. ${nome}`
-    }else{
+    } else {
         return `Olá Sra. ${nome}`
     }
 }
 
-function main(){
-   
+function main() {
+
     console.log("Digite seu nome a seguir: ")
     const nome: string = input("=> ")
 
     console.log("Digite o seu pronome a seguir:  (M - MASC, F - FEM)")
-    let pronome: string = input("=> ")
+    const pronome: string = input("=> ")
 
-    if(pronome === "M" || pronome === "F"){
-        gerar_saudacao(nome, pronome)
-    }else{
-        gerar_saudacao(nome)
+    if (pronome === "M" || pronome === "F") {
+        console.log(gerar_saudacao(nome, pronome))
+    } else {
+        console.log(gerar_saudacao(nome))
     }
-
-    
-
 
 }
 
