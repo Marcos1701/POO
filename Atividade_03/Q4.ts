@@ -5,8 +5,27 @@ formato string. Para isso, use o método forEach dos
 arrays.
 */
 
-function separa_num(vetor: number[]) : string{
-    let resultante: string
+function separa_num(vetor: number[]): string {
+    let resultante: string = ''
 
-    resultante = vetor.forEach(elemento => `${elemento}-`)
+    vetor.forEach(function (item) {
+        resultante += `${item}-`
+    })
+
+    return resultante
 }
+
+function main() {
+
+    const array: number[] = Array(5)
+
+    for (let i = 0; i < array.length; i++) {
+        array[i] = i + 1
+    }
+
+    const valores: string = separa_num(array)
+
+    console.log(valores)
+}
+
+main()
