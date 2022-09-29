@@ -16,13 +16,14 @@ class Conta {
         }
     }
 
-    sacar(valor: number): void {
+    sacar(valor: number): boolean {
 
         if (this.saldo >= valor && valor > 0) {
             this.saldo -= valor
         } else {
-            console.log("valor inválido")
+            return false
         }
+        return true
     }
 
     consultarSaldo(): number {
@@ -30,13 +31,13 @@ class Conta {
     }
 
 
-    transferir(conta: Conta, valor: number): void {
-        if (valor > 0 && this.saldo >= valor) {
-            this.sacar(valor)
+    transferir(conta: Conta, valor: number): boolean {
+        if (this.sacar(valor)) {
             conta.depositar(valor)
         } else {
-            console.log("Valor inválido!!")
+            return false
         }
+        return true
     }
 }
 
@@ -46,9 +47,22 @@ let c2: Conta = new Conta("2", 100);
 let c3: Conta;
 c1 = c2;
 c3 = c1;
-c1.sacar(10);
+if (c1.sacar(101)) {
+    console.log("Saque realizado com sucesso")
+} else {
+    console.log("Saque não realizado, um valor inválido ou maior que o seu saldo foi inserido!!!")
 
-c1.transferir(c2, 50);
+}
+
+
+if (c1.transferir(c2, 120)) {
+    console.log("Tranferencia realizada com sucesso!!")
+} else {
+    console.log("Transferencia não realizado, um valor inválido ou maior que o seu saldo foi inserido!!!")
+
+}
+
+
 console.log(c1.consultarSaldo());
 console.log(c2.consultarSaldo());
 console.log(c3.consultarSaldo());
