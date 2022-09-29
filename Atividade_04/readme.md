@@ -141,7 +141,8 @@ calcularAtaque) dos pontos do atacado                                           
 parâmetro não esteja vivo                                                                                                                                       .*
 
 *g. Crie um método chamado toString() que retorna a representação textual do produto concatenando todos os seus atributos                                         .*
-h. Avalie em com testes dois jogadores instanciados e inicializados através do construtor. Utilize o método de ataque de cada jogador e                             
+
+*h. Avalie em com testes dois jogadores instanciados e inicializados através do construtor. Utilize o método de ataque de cada jogador e                             
 ao final, verifique qual jogador tem mais pontos                                                                                                                .*
 
 **10. A abordagem da questão 5 é retornar códigos de erro ou acerto. Já a da questão 6.f. é desconsiderar a alteração. Quais das duas você acha mais correta?
