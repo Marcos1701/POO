@@ -26,7 +26,7 @@ class triangulo {
         let b: number = this.b
         let c: number = this.c
 
-        if (this.ehTriangulo()) {
+        if (!this.ehTriangulo()) {
             return false
         }
 
@@ -39,7 +39,7 @@ class triangulo {
         let b: number = this.b
         let c: number = this.c
 
-        if (this.ehTriangulo()) {
+        if (!this.ehTriangulo()) {
             return false
         }
 
@@ -52,7 +52,7 @@ class triangulo {
         let b: number = this.b
         let c: number = this.c
 
-        if (this.ehTriangulo()) {
+        if (!this.ehTriangulo()) {
             return false
         }
 
@@ -62,14 +62,14 @@ class triangulo {
 }
 
 
-let t: triangulo = new triangulo(3, 3, 3)
+let t: triangulo = new triangulo(4, 3, 2)
 
-if (t.ehTriangulo()) {
+if (!t.ehTriangulo()) {
     console.log("Não é um triangulo")
-} else if (t.ehIsosceles()) {
-    console.log("É isosceles!!")
 } else if (t.ehEquilatero()) {
     console.log("É equilátero!!")
+} else if (t.ehIsosceles()) {
+    console.log("É isosceles!!")
 } else if (t.ehEscaleno()) {
     console.log("É escaleno!!")
 }
