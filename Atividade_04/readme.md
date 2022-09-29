@@ -145,5 +145,9 @@ parâmetro não esteja vivo                                                     
 *h. Avalie em com testes dois jogadores instanciados e inicializados através do construtor. Utilize o método de ataque de cada jogador e                             
 ao final, verifique qual jogador tem mais pontos                                                                                                                .*
 
-**10. A abordagem da questão 6 é retornar códigos de erro ou acerto. Já a da questão 7.f. é desconsiderar a alteração. Quais das duas você acha mais correta?
-Compare com seus códigos escritos em outras disciplinas                                                                                             .**
+**10. A abordagem da questão 6 é retornar códigos de erro ou acerto. Já a da questão 6.f(vou considerar que está se referndo a 9.f) é 
+desconsiderar a alteração. Quais das duas você acha mais correta? Compare com seus códigos escritos em outras disciplinas                                           .**
+
+R- Depende do caso, em alguns é mais interessante de se analisar com base nos retornos de true, false ou de valores, mas em outros, caso alguma                 
+R- variável não atenda determinada "exigência", é melhor desconsiderar a alteração e informar ao usuário de um possível valor inválido                                 
+R- e solicitar ao mesmo que insira outro valor ou cancelar a chamada do método/ função, mas novamente, isso depende do caso análizado                             .
