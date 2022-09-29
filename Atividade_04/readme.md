@@ -145,5 +145,5 @@ parâmetro não esteja vivo                                                     
 *h. Avalie em com testes dois jogadores instanciados e inicializados através do construtor. Utilize o método de ataque de cada jogador e                             
 ao final, verifique qual jogador tem mais pontos                                                                                                                .*
 
-**10. A abordagem da questão 5 é retornar códigos de erro ou acerto. Já a da questão 6.f. é desconsiderar a alteração. Quais das duas você acha mais correta?
+**10. A abordagem da questão 6 é retornar códigos de erro ou acerto. Já a da questão 7.f. é desconsiderar a alteração. Quais das duas você acha mais correta?
 Compare com seus códigos escritos em outras disciplinas                                                                                             .**
