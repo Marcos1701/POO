@@ -14,6 +14,8 @@ quantReservas++;
 **Podemos afirmar que haverá um problema de compilação, pois a variável inteira não
 foi inicializada previamente? Justifique.**
 
+R- não haverá problema, mas o retorno/valor da variável será NaN, mas o typescrypt relata o erro : 
+R- "A propriedade 'quantReservas' não tem nenhum inicializador e não está definitivamente atribuída no construtor.".
 
 **2. Ainda sobre a classe do exemplo anterior, considere o código abaixo:**
 ```
@@ -23,6 +25,8 @@ console.log(hotel.quantReservas);
 
 **Adicione o construtor que aceite um parâmetro inteiro e faça a inicialização do atributo
 quantReservas.**
+
+R- Nesse caso, a função "adicionarReserva()" funciona perfeitamente, pois a variável "quantReservas" é inicializada.
 
 **3. Considere a classe Radio e as instruções que fazem seu uso abaixo:**
 
@@ -37,7 +41,10 @@ let r : Radio = new Radio();
 r.volume = 10;
 ```
 
-**Justifique o erro de compilação e proponha uma solução.**
+**Justifique o erro de compilação e proponha uma solução                                          .**
+
+R- O erro de compilação ocorre por conta da falta de argumentos/parâmetros na criação de "r", pois é preciso enviar um valor para
+R- inicializar a variável "volume"                                                                                                    .
 
 **4. Considerando o uso da classe Conta apresentada em aula e seu uso abaixo:**
 
@@ -56,7 +63,17 @@ console.log(c3.consultarSaldo());
 ```
 
 *a. Qual o resultado dos dois "prints"? Justifique sua resposta                                                                                           .*
+R- a saída resultante será: 
+```
+//90
+//90
+//90
+```
+R- isso ocorre, pois c1 e c3 são igualados a c2, ou seja, ambos começaram a apontar para o mesmo local/amazenamento na memória..
+
 *b. O que acontece com o objeto para o qual a referência c1 apontava                                                                                      ?*
+R- Será limpo/liberado pelo coletor de lixo, isso ocorre de forma automática a elementos que não possuem nenhuma variável 
+R- "apontando" para ele.
 
 **5. Crie uma classe chamada Saudacao que                                                                 :**
 
