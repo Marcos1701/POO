@@ -14,8 +14,8 @@ quantReservas++;
 **Podemos afirmar que haverá um problema de compilação, pois a variável inteira não
 foi inicializada previamente? Justifique.**
 
-R- não haverá problema, mas o retorno/valor da variável será NaN, mas o typescrypt relata o erro: "A propriedade 'quantReservas' não tem                              
-R- nenhum inicializador e não está definitivamente atribuída no construtor."                                                                                       .
+R- sim, o typescrypt relata o erro: "A propriedade 'quantReservas' não tem nenhum inicializador e não está definitivamente                                       
+R- atribuída no construtor.", mas caso executado o valor da variável qantReservas será "NaN"...                                                                    .
 
 **2. Ainda sobre a classe do exemplo anterior, considere o código abaixo:**
 ```
