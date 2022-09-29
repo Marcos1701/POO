@@ -1,4 +1,4 @@
-class triangulo {
+class Triangulo {
     a: number
     b: number
     c: number
@@ -62,14 +62,24 @@ class triangulo {
 }
 
 
-let t: triangulo = new triangulo(4, 3, 2)
+let escaleno: Triangulo = new Triangulo(4, 3, 2)
+let equilatero: Triangulo = new Triangulo(3, 3, 3)
+let isosceles: Triangulo = new Triangulo(3, 3, 1)
+let falso_triangulo: Triangulo = new Triangulo(1, 2, 3)
 
-if (!t.ehTriangulo()) {
-    console.log("Não é um triangulo")
-} else if (t.ehEquilatero()) {
-    console.log("É equilátero!!")
-} else if (t.ehIsosceles()) {
-    console.log("É isosceles!!")
-} else if (t.ehEscaleno()) {
-    console.log("É escaleno!!")
+conferir_triangulo(escaleno)
+conferir_triangulo(equilatero)
+conferir_triangulo(isosceles)
+conferir_triangulo(falso_triangulo)
+
+function conferir_triangulo(triangulo: Triangulo) {
+    if (!triangulo.ehTriangulo()) {
+        console.log("Não é um triangulo")
+    } else if (triangulo.ehEquilatero()) {
+        console.log("É equilátero!!")
+    } else if (triangulo.ehIsosceles()) {
+        console.log("É isosceles!!")
+    } else if (triangulo.ehEscaleno()) {
+        console.log("É escaleno!!")
+    }
 }
