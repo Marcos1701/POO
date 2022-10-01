@@ -3,6 +3,7 @@
 **1. Atualize a implementação da classe Banco apresentada em sala de acordo com as seguintes instruções:**
 
 *a. Altere o método inserir para que não seja possível contas com mesmo número;*
+
 *b. sacar(numero: string, valor: number): pesquisa uma conta e realiza uma operação de crédito com o valor passado.*
 
 *c. transferir(numeroCredito: string, numeroDebito: string, valor: number): realiza uma procura por ambas as contas e chama o método 
