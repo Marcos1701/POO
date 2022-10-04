@@ -1,6 +1,6 @@
-import prompt from "prompt-sync";
+import prompt from 'prompt-sync';
 import { Conta, Banco } from "./Banco.js"
-let input = prompt();
+const input = prompt();
 let b: Banco = new Banco();
 let opcao: String = '';
 do {
@@ -22,40 +22,38 @@ do {
     } else if (opcao == '7') {
         totaliza()
     } else if (opcao != '0') {
-        console.log("Opção inválida!!!")
+        console.log("\nOpção inválida!!!")
     }
 
     input("Operação finalizada. Digite <enter>");
 } while (opcao != "0");
-console.log("Aplicação encerrada");
+console.log("\nAplicação encerrada");
 
 function menu(): void {
     console.log('\nBem vindo\nDigite uma opção:');
     console.log('1 - Cadastrar 2 - Consultar 3 - Sacar\n' +
         '4 - Depositar 5 - Excluir 6 - Transferir\n' +
-        '7 – Totalizações' +
+        '7 – Totalizações\n' +
         '0 - Sair\n')
-    return
 }
 
 function inserir(): void {
     console.log("\nCadastrar conta\n");
-    let numero: string = input('Digite o número da conta:\n=>');
+    let numero: String = input('Digite o número da conta: ');
     let conta: Conta;
     conta = new Conta(numero, 0);
     b.inserir(conta);
-    return
 }
 
 function consultar(): void {
     console.log("\nConsultar conta\n")
-    let numero: string = input('Digite o número da conta:\n=>')
+    let numero: String = input('Digite o número da conta: ')
     let conta: Conta = b.consultar_conta(numero)
 
     if (conta) {
         console.log(conta.informacoes_da_conta())
     } else {
-        console.log("A conta não existe!!")
+        console.log("\nA conta não existe!!")
     }
     return
 }
@@ -64,53 +62,54 @@ function consultar(): void {
 function sacar(): void {
 
     console.log("\nSacar\n")
-    let numero: string = input('Digite o número da conta:\n=>')
-    let quantia: number = Number(input('Digite o Valor de saque: \n=> R$ '))
+    let numero: String = input('Digite o número da conta: ')
+    let quantia: number = Number(input('Digite o Valor de saque: R$ '))
 
     if (b.sacar(numero, quantia)) {
-        console.log("Saque Realizado com sucesso")
+        console.log("\nSaque Realizado com sucesso")
     } else {
-        console.log("Valor de saque inválido ou superior ao do saldo da conta\n")
+        console.log("\nValor de saque inválido ou superior ao do saldo da conta")
     }
-    return
 }
 
 function depositar(): void {
 
     console.log("\nDepositar\n")
-    let numero: string = input('Digite o número da conta:\n=>')
-    let quantia: number = Number(input('Digite o Valor de Deposito: \n=> R$ '))
+    let numero: String = input('Digite o número da conta: ')
+    let quantia: number = Number(input('Digite o Valor de Deposito: R$ '))
 
-    b.depositar(numero, quantia)
-    return
+    if (b.depositar(numero, quantia)) {
+        console.log("\nDeposito realizado com sucesso!!")
+    } else {
+        console.log("\nErro, conta inexistente!!")
+    }
 }
 
 function excluir(): void {
 
     console.log("\nExcluir\n")
-    let numero: string = input('Digite o número da conta:\n=>')
+    let numero: String = input('Digite o número da conta: ')
 
     if (b.excluir_conta(b.consultar_conta(numero))) {
-        console.log("Conta excluída com sucesso!!!")
+        console.log("\nConta excluída com sucesso!!!")
     } else {
-        console.log("Conta inexistente, confira o número digitado!!")
+        console.log("\nConta inexistente, confira o número digitado!!")
     }
-    return
+
 }
 
 function tranfere(): void {
 
     console.log("\nTranferir\n")
-    let numero_manda: string = input('Digite o número da conta que irá realizar a tranferencia:\n=>')
-    let numero_recebe: string = input('Digite o número da conta que irá receber a tranferencia:\n=>')
-    let quantia: number = Number(input('Digite o Valor de Deposito: \n=> R$ '))
+    let numero_manda: String = input('Digite o número da conta que irá realizar a tranferencia: ')
+    let numero_recebe: String = input('Digite o número da conta que irá receber a tranferencia: ')
+    let quantia: number = Number(input('Digite o Valor de Deposito: R$ '))
 
     if (b.transferir(numero_manda, numero_recebe, quantia)) {
-        console.log("\nTranferencia Reallizada com sucesso!!!\n")
+        console.log("\nTranferencia Realizada com sucesso!!!")
     } else {
-        console.log("Houve um erro ao realizar a transferencia, confira os dados e tente novamente!!!\n")
+        console.log("\nHouve um erro ao realizar a transferencia, confira os dados e tente novamente!!!")
     }
-    return
 }
 
 function totaliza(): void {
@@ -121,5 +120,4 @@ Saldo Total: R$ ${b.Soma_saldo()}
 Total de contas: ${b.qtd_contas()} contas
 Média Saldo: R$ ${b.media_saldo()}
 `)
-    return
 }
