@@ -35,6 +35,7 @@ function menu(): void {
         '4 - Depositar 5 - Excluir 6 - Transferir\n' +
         '7 – Totalizações' +
         '0 - Sair\n')
+    return
 }
 
 function inserir(): void {
@@ -43,6 +44,7 @@ function inserir(): void {
     let conta: Conta;
     conta = new Conta(numero, 0);
     b.inserir(conta);
+    return
 }
 
 function consultar(): void {
@@ -70,6 +72,7 @@ function sacar(): void {
     } else {
         console.log("Valor de saque inválido ou superior ao do saldo da conta\n")
     }
+    return
 }
 
 function depositar(): void {
@@ -79,6 +82,7 @@ function depositar(): void {
     let quantia: number = Number(input('Digite o Valor de Deposito: \n=> R$ '))
 
     b.depositar(numero, quantia)
+    return
 }
 
 function excluir(): void {
@@ -91,7 +95,7 @@ function excluir(): void {
     } else {
         console.log("Conta inexistente, confira o número digitado!!")
     }
-
+    return
 }
 
 function tranfere(): void {
@@ -106,6 +110,7 @@ function tranfere(): void {
     } else {
         console.log("Houve um erro ao realizar a transferencia, confira os dados e tente novamente!!!\n")
     }
+    return
 }
 
 function totaliza(): void {
@@ -116,4 +121,5 @@ Saldo Total: R$ ${b.Soma_saldo()}
 Total de contas: ${b.qtd_contas()} contas
 Média Saldo: R$ ${b.media_saldo()}
 `)
+    return
 }
