@@ -11,6 +11,10 @@ atributos;*
 
 *Teste a classe calculadora e seus métodos. Tente acessar os atributos diretamente e verifique o que acontece.*
 
+```
+  // As respostas estã no arquivo : Calculadora.ts
+```
+
 **2. Crie uma classe Hora que tenha:**
 
 *a. Três atributos privados e definidos no construtor chamados hora, minutos e segundos;*
@@ -18,6 +22,10 @@ atributos;*
 *b. Métodos públicos para ler hora, minuto e segundo de forma individual;*
 
 *c. Um método público para retorne a hora no formato “hh:mm:ss”.*
+
+```
+  // As respostas estã no arquivo : Hora.ts
+```
 
 **3. Altere as implementações da classe Banco das aulas anteriores para que:**
 
@@ -27,6 +35,10 @@ atributos;*
 
 *c. Os demais métodos sejam públicos.*
 
+```
+  // As respostas estã no arquivo : Banco_e_Conta_v2.ts
+```
+
 **4. Altere também a sua classe Conta dos exercícios anteriores para:**
 
 *a. Ter atributos privados e métodos “get” para leitura;*
@@ -35,3 +47,7 @@ atributos;*
 visto que os atributos que agora são privados.*
 
 **Crie scripts que testam todas classes e verifiquem o acesso a atributos privados.**
+
+```
+  // As respostas estã no arquivo : Banco_e_Conta_v2.ts
+```
