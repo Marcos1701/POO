@@ -169,11 +169,21 @@ export class Banco {
 
 }
 
-let banco: Banco = new Banco()
+let conta_1: Conta = new Conta("1", 200)
 
-banco.inserir(new Conta("1", 100))
-banco.inserir(new Conta("2", 100))
-banco.inserir(new Conta("3", 100))
+//conta_1._numero, A propriedade '_numero' é particular e somente é acessível na classe 'Conta'.
+//conta_1.numero = 1, Não é possível atribuir a 'numero' porque é uma propriedade de somente leitura.
+//conta_1.saldo = 20000, Não é possível atribuir a 'saldo' porque é uma propriedade de somente leitura.
+
+let banco: Banco = new Banco()
+let conta_2: Conta = new Conta("2", 250)
+let conta_3: Conta = new Conta("3", 300)
+
+banco.inserir(conta_1)
+banco.inserir(conta_2)
+banco.inserir(conta_3)
+
+//banco.consultar_index_conta(), A propriedade 'consultar_index_conta' é particular e somente é acessível na classe 'Banco'.
 
 //console.log(banco.contas[0]) // (property) Banco.contas: Conta[] A propriedade 'contas' é particular
 //e somente é acessível na classe 'Banco'.
