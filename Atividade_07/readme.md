@@ -1,4 +1,4 @@
-# Exercício 07 – parte I
+# Exercício 07
 
 **1. As classes Carro, Veiculo e CarroEletrico são bem semelhantes. Reescreva as
 classes usando herança para que os atributos duplicados não sejam mais
