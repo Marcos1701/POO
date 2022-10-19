@@ -25,13 +25,33 @@ autonomiaBateria: number;
 
 ```
 
+R-
+```
+   // A resposta está no arquivo "Q1.ts"
+```
+
 **2. Crie uma classe Calculadora com:**
 
 *a. Dois tributos privados chamados representando dois operandos;*
 
+R-
+  ```
+  //A resposta está no arquivo "Q2.ts"
+  ```
+
 *b. Crie um construtor que inicializa os atributos;*
 
+R-
+  ```
+  //A resposta está no arquivo "Q2.ts"
+  ```
+
 *c. Crie um método que retorna a soma dos dois atributos;*
+
+R-
+  ```
+  //A resposta está no arquivo "Q2.ts"
+  ```
 
 *d. Teste a classe.*
 
@@ -41,9 +61,26 @@ do exercício passado e:**
 *a. Implemente um método chamado exponenciar que retorne o primeiro
 operando elevado ao segundo;*
 
+R-
+  ```
+  //A resposta está no arquivo "Q3.ts"
+  ```
+
 *b. Teste a classe;*
 
+R-
+  ```
+  //A resposta está no arquivo "Q3.ts"
+  ```
+
 *c. Foi necessária alguma modificação em Calculadora para o acesso aos atributos?*
+
+```
+    // R- Sim, pois como a classe CalculadoraCientifica herda apenas as caracteristicas de
+    // R- Calculadora, mas não possui acesso direto aos atributos privados estabelecidos na
+    // R- classe mãe. (não sei se é apenas o editor de código que está com onda, mas quando executo
+    // R- o arquivo .js, ele roda numa boa...)
+```
 
 **4. Considerando a implementação da aplicação bancária, implemente:**
 
