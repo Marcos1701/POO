@@ -84,6 +84,11 @@ R-
 
 **4. Considerando a implementação da aplicação bancária, implemente:**
 
+R-
+```
+   // A resposta está na pasta "Q4"
+```
+
 *a. Implemente na classe Banco o método renderJuros(numero: string): number, onde:*
 
 *i. É passado por parâmetro o número de uma poupança e feita uma
