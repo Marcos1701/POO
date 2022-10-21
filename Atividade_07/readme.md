@@ -116,6 +116,11 @@ texto algumas contas, contas imposto e poupanças.*
 
 **5. Suponha um sistema de controle de estoque de produtos e implemente:**
 
+R-
+  ```
+  //A resposta está no arquivo "Q3.ts"
+  ```
+
 *a. Duas classes: Produto e ProdutoPerecivel;*
 
 *b. A classe Produto tem atributos privados representando identificador, descrição, quantidade de produtos em estoque e valor unitário;*
