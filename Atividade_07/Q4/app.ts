@@ -1,4 +1,5 @@
 import prompt from 'prompt-sync';
+
 import { Conta, Banco, Poupanca, ContaImposto } from "./banco.js"
 const input = prompt();
 
@@ -26,6 +27,8 @@ function main() {
             tranfere(b)
         } else if (opcao == '8') {
             totaliza(b)
+        } else if (opcao == '9') {
+            inserirApartirdeArquivo(b)
         } else if (opcao != '0') {
             console.log("\nOpção inválida!!!")
         }
@@ -77,7 +80,41 @@ function menu(): void {
     console.log('1 - CriarConta 2 - ConsultarConta 3 - Sacar\n' +
         '4 - Depositar  5 - renderJuros(Conta Poupança) 6 - Excluir\n' +
         '7 - Transferir 8 – Totalizações\n' +
+        '9 - inserir contas apartir de arquivo de texto\n' +
         '0 - Sair\n')
+}
+
+function inserirApartirdeArquivo(b: Banco) {
+
+    console.log("Observações: ")
+    console.log("Os dados do arquivos devem ser separados por ';'")
+    console.log("'C' indica uma conta normal, 'CI' indica uma conta imposto e 'P' indica uma conta poupança")
+    console.log("Os dados devem estar organizados da seguinte maneira: \n> 'tipo da conta; o numero; saldo; Taxa de juros (caso sendo poupança) ou Taxa de Imposto (caso conta imposto).'\n")
+
+    const nomeArquivo: string = input("Digite o nome do arquivo com as contas que serão inseridas (juntamente com a extenção .txt): ")
+
+    const { leitor_de_arquivo } = require('line-reader')
+
+    leitor_de_arquivo(nomeArquivo, (linha: string) => analisar_linha_arquivo(linha, b))
+
+}
+
+function analisar_linha_arquivo(linha: string, b: Banco): void {
+
+    const linha_frag: string[] = linha.split(';')
+
+    if (linha_frag[0] == "C") {
+        const conta_normal: Conta = new Conta(linha_frag[1], Number(linha_frag[2]))
+        b.inserir(conta_normal)
+    } else if (linha_frag[0] == "P") {
+        const conta_Poupanca: Poupanca = new Poupanca(linha_frag[1], Number(linha_frag[2]), Number(linha_frag[3]))
+        b.inserir(conta_Poupanca)
+    } else if (linha_frag[0] == "CI") {
+        const conta_Imposto: ContaImposto = new ContaImposto(linha_frag[1], Number(linha_frag[2]), Number(linha_frag[3]))
+        b.inserir(conta_Imposto)
+    } else {
+        console.log(`\nEm uma das linhas, o valor '${linha_frag[0]} foi inserido como um tipo de conta, mas esse valor é inválido!!!\n`)
+    }
 }
 
 
