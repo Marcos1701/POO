@@ -1,5 +1,7 @@
 import prompt from 'prompt-sync';
 
+import fs from 'fs'
+
 import { Conta, Banco, Poupanca, ContaImposto } from "./banco.js"
 const input = prompt();
 
@@ -89,14 +91,13 @@ function inserirApartirdeArquivo(b: Banco) {
     console.log("Observações: ")
     console.log("Os dados do arquivos devem ser separados por ';'")
     console.log("'C' indica uma conta normal, 'CI' indica uma conta imposto e 'P' indica uma conta poupança")
-    console.log("Os dados devem estar organizados da seguinte maneira: \n> 'tipo da conta; o numero; saldo; Taxa de juros (caso sendo poupança) ou Taxa de Imposto (caso conta imposto).'\n")
+    console.log("Os dados devem estar organizados da seguinte maneira: \n> 'tipo da conta;numero;saldo;Taxa de juros(caso sendo poupança) ou Taxa de Imposto(caso conta imposto).'")
 
-    const nomeArquivo: string = input("Digite o nome do arquivo com as contas que serão inseridas (juntamente com a extenção .txt): ")
+    const nomeArquivo: string = input("Digite o nome do arquivo com as contas que serão inseridas : ")
 
-    const { leitor_de_arquivo } = require('line-reader')
+    const leitor_de_arquivo: string[] = fs.readFileSync(`./${nomeArquivo}`, 'utf-8').split('\n')
 
-    leitor_de_arquivo(nomeArquivo, (linha: string) => analisar_linha_arquivo(linha, b))
-
+    leitor_de_arquivo.forEach((linha: string) => analisar_linha_arquivo(linha, b))
 }
 
 function analisar_linha_arquivo(linha: string, b: Banco): void {
