@@ -94,8 +94,8 @@ console.log(`Sobrenome: ${func.sobrenome}`)
 console.log(`Nome Completo: ${func.nomeCompleto}`)
 console.log(`Matrícula: ${func.matricula}`)
 console.log(`Salário: R$ ${func.salario}`)
-console.log(`Valor Primeira Parcela: R$ ${func.calcularSalarioPrimeiraParcela()}`)
-console.log(`Valor Segunda Parcela: R$ ${func.calcularSalarioSegundaParcela()}\n`)
+console.log(`Valor Primeira Parcela(60%): R$ ${func.calcularSalarioPrimeiraParcela()}`)
+console.log(`Valor Segunda Parcela(40%): R$ ${func.calcularSalarioSegundaParcela()}\n`)
 
 
 console.log(`\n------- Teste Classe Professor -------`)
