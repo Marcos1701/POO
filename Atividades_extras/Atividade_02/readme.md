@@ -11,6 +11,12 @@ R-
 
 **2) Explique por que cada um dos 3 métodos acima possui limitações de uso.**
 
+R-
+
+```
+  // A resposta está no Arquivo: "Q2.md"
+```
+
 **3) Com o código repassado, implemente o como nos slides o lançamento da exceção
 no método sacar e realize um teste para saques que deixariam o saldo negativo.**
 
