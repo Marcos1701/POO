@@ -20,8 +20,21 @@ R-
 **3) Com o código repassado, implemente o como nos slides o lançamento da exceção
 no método sacar e realize um teste para saques que deixariam o saldo negativo.**
 
+R-
+
+```
+  // A resposta está no Arquivo: "./Banco_testes/Q3.ts"
+```
+
+
 **4) Crie duas contas e teste o método transferir de modo que a conta a ser debitada
 não possua saldo suficiente. Explique o que ocorreu.**
+
+R-
+
+```
+  // A resposta está no Arquivo: "./Banco_testes/Q4.ts"
+```
 
 **5) Instancie uma classe banco e crie duas contas. Adicione-as à instancia do banco.
 Chame o método transferir novamente passando um valor que lance a exceção na
@@ -29,7 +42,19 @@ classe conta. Você considera que o lançamento da exceção foi “propagado”
 método conta.transferir(), banco.transferir() e o método transferir do script app?
 Como você avalia a confiabilidade dessa implementação.**
 
+R-
+
+```
+  // A resposta está no Arquivo: "./Banco_testes/Q5.ts"
+```
+
 **6) Lance um erro no construtor e nos métodos sacar e depositar para que, caso o
 valor passado seja menor que zero uma exceção seja lançada. Reexecute os
 testes da questão anterior com valores que “passem” pelo saldo insuficiente, e
 teste também a chamada dos métodos passando como parâmetro valores < 0.**
+
+R-
+
+```
+  // A resposta está no Arquivo: "./Banco_testes/Q6.ts"
+```
