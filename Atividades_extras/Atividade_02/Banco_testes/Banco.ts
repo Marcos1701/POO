@@ -1,12 +1,12 @@
-import { isReturnStatement } from "typescript"
-
 class Conta {
 
     private _numero: string
     private _saldo: number
     constructor(numero: string, saldo: number) {
         this._numero = numero
-        if (this.saldo < 0) { throw new Error("Saldo inválido!!!!") }
+        if (saldo < 0) {
+            throw new Error("Saldo inválido!!!!")
+        }
         this._saldo = saldo
     }
 
