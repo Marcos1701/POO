@@ -6,7 +6,7 @@ códigos seus ou pesquisados na internet.**
 R-
 
 ```
-  // A resposta está no Arquivo: "Q1.ts"
+  // A resposta está no Arquivo: "Q1.md"
 ```
 
 **2) Explique por que cada um dos 3 métodos acima possui limitações de uso.**
