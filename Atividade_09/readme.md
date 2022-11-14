@@ -41,7 +41,8 @@ podemos dar new em FiguraGeometrica[10], por exemplo?**
 R- 
 ```
 
-   //O elemento implicitamente tem um tipo 'any' porque a expressão do tipo '10' não pode ser usada para o tipo de índice 'typeof FiguraGeometrica'.
+   //O elemento implicitamente tem um tipo 'any' porque a expressão do tipo '10'
+   //não pode ser usada para o tipo de índice 'typeof FiguraGeometrica'.
    // A propriedade '10' não existe no tipo 'typeof FiguraGeometrica'
    
    // quando tentei instanciar como new FiguraGeometrica[10] apareceu esse erro..
@@ -49,6 +50,11 @@ R-
 
 **6. Implemente as classes Funcionario, Gerente e Diretor conforme o diagrama
 exposto em sala:**
+
+R- 
+```
+  // A resposta está no arquivo 'Q6.ts'
+```
 
 *a. A classe funcionário deve ser abstrata e o método getBonificacao()
 abstrato;*
