@@ -38,6 +38,15 @@ R-
 **5. Não podemos aplicar o operador new em FiguraGeometrica, mas por que então
 podemos dar new em FiguraGeometrica[10], por exemplo?**
 
+R- 
+```
+
+   //O elemento implicitamente tem um tipo 'any' porque a expressão do tipo '10' não pode ser usada para o tipo de índice 'typeof FiguraGeometrica'.
+   // A propriedade '10' não existe no tipo 'typeof FiguraGeometrica'
+   
+   // quando tentei instanciar como new FiguraGeometrica[10] apareceu esse erro..
+```
+
 **6. Implemente as classes Funcionario, Gerente e Diretor conforme o diagrama
 exposto em sala:**
 
