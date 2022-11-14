@@ -131,3 +131,9 @@ preocupa que tipo de classe está sendo passada.*
 SeguroDeVida, adicione-as na classe AuditoriaInterna e exiba o resultado do
 método calculaTributos. Perceba que a classe de auditoria não se preocupa que
 tipo de classe está sendo passada.**
+
+
+R- 
+```
+  // A resposta está no arquivo 'Q12.ts'
+```
