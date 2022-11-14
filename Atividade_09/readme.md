@@ -103,6 +103,12 @@ R-
 
 *obs: O diagrama está no pdf*
 
+
+R- 
+```
+  // A resposta está no arquivo 'Q10.ts'
+```
+
 **11. Crie uma classe chamada AuditoriaInterna que tenha dois métodos que tenha uma
 lista de Tributaveis e os métodos:**
 
@@ -116,7 +122,7 @@ SeguroDeVida, adicione-as na classe AuditoriaInterna e exiba o resultado
 do método calculaTributos. Perceba que a classe de auditoria não se
 preocupa que tipo de classe está sendo passada.*
 
-*12. Crie uma classe de testes que instancie várias classes ContaCorrente e
+**12. Crie uma classe de testes que instancie várias classes ContaCorrente e
 SeguroDeVida, adicione-as na classe AuditoriaInterna e exiba o resultado do
 método calculaTributos. Perceba que a classe de auditoria não se preocupa que
-tipo de classe está sendo passada.*
+tipo de classe está sendo passada.**
