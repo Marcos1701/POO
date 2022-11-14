@@ -2,6 +2,8 @@
 ## Classes Abstratas
 **1. Podemos instanciar classes abstratas? Justifique.**
 
+R- Não, pois ela é, tecnicamente, uma classe incompleta.
+
 **2. Explique o que é necessário para que a compilação da ClasseConcreta ocorra
 sem erros:**
 ```
@@ -14,13 +16,24 @@ ClasseAbstrata {
 }
 ```
 
+R- é necessário que se implemente o método 'imprimaAlgo()' para que dessa maneira, ele deixe de ser abstrato e    
+R- ele passe a ser um método por completo, caso contrário a classe 'ClasseConcreta' continuaria sendo abstrata,                                   
+R- assim como a sua classe mãe..                                            
+
 **3. Se uma classe que herda de uma abstrata e não implementa os seus métodos, o
 que ocorre?**
+
+R- Ela continua sendo abstrata, assim como a sua classe mãe..
 
 **4. Imagine que você deve modelar várias figuras geométricas em TypeScript e que
 cada uma tem sua forma específica de calcular área e perímetro. Proponha e
 implemente uma hierarquia de classes usando uma classe abstrata chamada
 FiguraGeometrica e outras concretas: Quadrado, Triangulo, etc.**
+
+R- 
+```
+  // A resposta está no arquivo 'Q4.ts'
+```
 
 **5. Não podemos aplicar o operador new em FiguraGeometrica, mas por que então
 podemos dar new em FiguraGeometrica[10], por exemplo?**
