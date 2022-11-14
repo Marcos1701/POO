@@ -36,17 +36,18 @@ R-
 ```
 
 **5. Não podemos aplicar o operador new em FiguraGeometrica, mas por que então
-podemos dar new em FiguraGeometrica[10], por exemplo?**
+podemos realizar o seguinte código de instanciação:**
 
-R- 
+```
+abstract class FiguraGeometrica {
+//...
+}
+let figuras: FiguraGeometrica[] = new Array();
 ```
 
-   //O elemento implicitamente tem um tipo 'any' porque a expressão do tipo '10'
-   //não pode ser usada para o tipo de índice 'typeof FiguraGeometrica'.
-   // A propriedade '10' não existe no tipo 'typeof FiguraGeometrica'
-   
-   // quando tentei instanciar como new FiguraGeometrica[10] apareceu esse erro..
-```
+R- isso é possivel, e é uma forma de armazenar as várias formas geométricas advindas da classe 'FiguraGeometrica',
+R- logo essa maneira de instanciação so é possivel para armazenar as classes filhas de 'FiguraGeometrica' em um mesmo array,
+R- pelo menos é dessa maneira que eu consegui interpretar essa instanciação...
 
 **6. Implemente as classes Funcionario, Gerente e Diretor conforme o diagrama
 exposto em sala:**
@@ -99,6 +100,8 @@ R-
 ```
 
 **10. Implemente o diagrama de classes abaixo:**
+
+*obs: O diagrama está no pdf*
 
 **11. Crie uma classe chamada AuditoriaInterna que tenha dois métodos que tenha uma
 lista de Tributaveis e os métodos:**
