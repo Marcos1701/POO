@@ -72,6 +72,11 @@ abstrato;*
 em vez de herança. Crie também uma classe de teste que instancie e teste
 diferentes formas geométricas.**
 
+R- 
+```
+  // A resposta está no arquivo 'Q7.ts'
+```
+
 **8. Crie uma interface chamada IComparavel com um método chamado comparar que
 receba uma forma geométrica como parâmetro e retorna um inteiro como
 resultado. Implemente em cada uma das classes do exemplo anterior a interface
