@@ -2,22 +2,37 @@ class Conta {
 
     private _numero: string
     private _saldo: number
+
+
     constructor(numero: string, saldo: number = 0) {
+        this.validarNumero(numero)
         this._numero = numero
+        this.validarValor(saldo)
         this._saldo = saldo
     }
 
-    depositar(valor: number): void {
-        if (valor < 0 || isNaN(valor)) {
-            throw new ValorDepositoInvalido_Error("Valor inválido!!")
+    validarNumero(numero: string): void {
+        const num: number = Number(numero)
+        if (isNaN(num)) {
+            throw new ValorInvalido_Error("O número da conta é inválido!!")
         }
+    }
+
+    validarValor(valor: number): void {
+        if (valor < 0 || isNaN(valor)) {
+            throw new ValorInvalido_Error("Erro, o valor inserido é inválido!!")
+        }
+    }
+
+    depositar(valor: number): void {
+        this.validarValor(valor)
         this._saldo += valor
     }
 
     sacar(valor: number): void {
-
-        if (this._saldo < valor || valor < 0) {
-            throw new SaldoInsuficiente_Error("Saldo insuficiente ou valor inválido, operação não realizada!!")
+        this.validarValor(valor)
+        if (valor > this.saldo) {
+            throw new SaldoInsuficiente_Error("Saldo insuficiente, operação cancelada!!")
         }
         this._saldo -= valor
     }
@@ -107,13 +122,17 @@ class Banco {
             if (e instanceof ContaInexistenteError) {
                 this.contas.push(conta)
             } else {
-                console.log("Conta já existente..")
+                throw new contaJaExistente_Error(`Erro ao inserir a conta, já existe uma conta de número: ${conta.numero}`)
             }
         }
     }
 
     consultar_conta(numero: string): Conta {
         let conta!: Conta
+        
+        if (isNaN(Number(numero)) || numero == '') {
+            throw new ValorInvalido_Error(`Erro, o número de conta inserido é inválido!!`)
+        }
 
         for (let i = 0; i < this.contas.length; i++) {
             if (this.contas[i].numero == numero) {
@@ -143,7 +162,7 @@ class Banco {
     }
 
     alterar_conta(conta: Conta): void {
-        let index: number = this.consultar_index_conta(conta.numero)
+        const index: number = this.consultar_index_conta(conta.numero)
         this.contas[index] = conta
     }
 
@@ -156,25 +175,25 @@ class Banco {
     }
 
     depositar(numero: string, quantia: number): void {
-        let conta: Conta = this.consultar_conta(numero)
+        const conta: Conta = this.consultar_conta(numero)
         conta.depositar(quantia)
     }
 
     sacar(numero: string, quantia: number): void {
-        let conta: Conta = this.consultar_conta(numero)
+        const conta: Conta = this.consultar_conta(numero)
         conta.sacar(quantia)
     }
 
     transferir(numero_conta_1: string, numero_conta_2: string, quantia: number): void {
-        let conta_manda: Conta = this.consultar_conta(numero_conta_1)
-        let conta_recebe: Conta = this.consultar_conta(numero_conta_2)
+        const conta_manda: Conta = this.consultar_conta(numero_conta_1)
+        const conta_recebe: Conta = this.consultar_conta(numero_conta_2)
         conta_manda.transferir(conta_recebe, quantia)
     }
 
     renderJuros(numero: string): void {
         const conta: Conta = this.consultar_conta(numero)
         if (!(conta instanceof Poupanca)) {
-            throw new ContaInexistenteError("Conta não é do tipo Poupança")
+            throw new ContaInvalidaError("Erro, a conta inserida não é do tipo Poupança")
         }
         conta.render_juros();
     }
@@ -199,5 +218,9 @@ class Banco {
 
 }
 
-import { ValorInvalido as ValorDepositoInvalido_Error, SaldoInsuficiente as SaldoInsuficiente_Error, ContaInexistenteError } from './trata_erros.js'
+import {
+    ValorInvalido_Error, SaldoInsuficiente_Error,
+    ContaInexistenteError, ContaInvalidaError,
+    contaJaExistente_Error
+} from './trata_erros.js'
 export { Conta, Banco, Poupanca, ContaImposto }
