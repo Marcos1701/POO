@@ -112,6 +112,11 @@ R-
 **11. Crie uma classe chamada AuditoriaInterna que tenha dois métodos que tenha uma
 lista de Tributaveis e os métodos:**
 
+R- 
+```
+  // A resposta está no arquivo 'Q11.ts'
+```
+
 *a. adicionar(Tributável);*
 
 *b. calcularTributos(): retorna um double que representa a soma de todos os
