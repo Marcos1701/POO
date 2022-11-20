@@ -10,7 +10,8 @@ com valor 10;*
 *b. Bases militares possuem os atributos: id, localização x e y e percentual de danos
 começando com 0.*
 
-**2) Guerreiros e bases militares devem implementar a interface:*b. Guerreiros possuem os atributos id, descrição, força de ataque e “life” começando.**
+**2) Guerreiros e bases militares devem implementar a interface:**
+
 ```
 interface Defensivel {
 estaEliminado(): boolean;
