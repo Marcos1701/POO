@@ -1,6 +1,6 @@
 
 class Post {
-    private _id: string
+    private _id: number
     private _texto: string
     private _autor: IAutenticavel
     private _curtidas: number
@@ -9,13 +9,14 @@ class Post {
     private Usuarios_que_curtiram: Usuario[] = []
 
     constructor(
-        id: string,
+        id: number,
         texto: string,
         autor: IAutenticavel,
         legenda: string,
         data: Date, curtidas: number = 0
     ) {
-        this.ValidarValor(curtidas)
+        this.ValidarValor(id);
+        this.ValidarValor(curtidas);
         this._id = id
         this._texto = texto
         this._autor = autor
@@ -43,7 +44,7 @@ class Post {
         }
     }
 
-    get id(): string {
+    get id(): number {
         return this._id
     }
 
@@ -70,7 +71,7 @@ class Post {
 class RedeSocial {
     private Posts: Post[] = []
     constructor(
-        private _id: string,
+        private _id: number,
         private _nome: string,
     ) { }
 
@@ -78,11 +79,11 @@ class RedeSocial {
         return this._nome
     }
 
-    get id(): string {
+    get id(): number {
         return this._id
     }
 
-    consultar_post(id: string): Post {
+    consultar_post(id: number): Post {
         for (let post of this.Posts) {
             if (post.id == id) {
                 return post
@@ -91,7 +92,7 @@ class RedeSocial {
         throw new post_inexistente("Post não encontrado")
     }
 
-    private consultar_index_post(id: string): number {
+    private consultar_index_post(id: number): number {
         for (let i = 0; i < this.Posts.length; i++) {
             if (this.Posts[i].id == id) {
                 return i
@@ -111,13 +112,13 @@ class RedeSocial {
         }
     }
 
-    alterar_post(id: string, texto: string, legenda: string): void {
+    alterar_post(id: number, texto: string, legenda: string): void {
         const index = this.consultar_index_post(id)
         const post: Post = new Post(id, texto, this.Posts[index].autor, legenda, new Date(), this.Posts[index].curtidas)
         this.Posts[index] = post
     }
 
-    excluir_post(id: string): void {
+    excluir_post(id: number): void {
         const index = this.consultar_index_post(id)
         for (let i = index; i < this.Posts.length; i++) {
             this.Posts[i] = this.Posts[i + 1]
@@ -125,7 +126,7 @@ class RedeSocial {
         this.Posts.push()
     }
 
-    curtir_post(id: string, usuario: Usuario) {
+    curtir_post(id: number, usuario: Usuario) {
         const index = this.consultar_index_post(id)
         this.Posts[index].curtir(usuario);
     }
