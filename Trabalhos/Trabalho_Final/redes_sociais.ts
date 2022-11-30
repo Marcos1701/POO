@@ -1,16 +1,46 @@
 
 class Post {
-    constructor(
-        private _id: string,
-        private _texto: string,
-        private _autor: IAutenticavel,
-        private _curtidas: number,
-        private _legenda: string,
-        private _data: Date
-    ) { }
+    private _id: string
+    private _texto: string
+    private _autor: IAutenticavel
+    private _curtidas: number
+    private _legenda: string
+    private _data: Date
+    private Usuarios_que_curtiram: Usuario[] = []
 
-    curtir(): void {
-        this._curtidas++;
+    constructor(
+        id: string,
+        texto: string,
+        autor: IAutenticavel,
+        legenda: string,
+        data: Date, curtidas: number = 0
+    ) {
+        this.ValidarValor(curtidas)
+        this._id = id
+        this._texto = texto
+        this._autor = autor
+        this._legenda = legenda
+        this._data = data
+        this._curtidas = curtidas
+    }
+
+    ValidarValor(valor: number): void {
+        if (isNaN(valor) || valor < 0) {
+            throw new ValorInvalido("Erro, um dos valores inseridos é inválido!!");
+        }
+    }
+    curtir(usuario: Usuario): void {
+        if (usuario instanceof Usuario) {
+            this._curtidas++;
+            this.Usuarios_que_curtiram.push(usuario)
+        }
+
+    }
+
+    exibir_usuarios_que_curtiram(): void {
+        for (let usuario of this.Usuarios_que_curtiram) {
+            console.log(`Nome: ${usuario.nome}\nidade: ${usuario.idade}`)
+        }
     }
 
     get id(): string {
@@ -83,7 +113,7 @@ class RedeSocial {
 
     alterar_post(id: string, texto: string, legenda: string): void {
         const index = this.consultar_index_post(id)
-        const post: Post = new Post(id, texto, this.Posts[index].autor, this.Posts[index].curtidas, legenda, new Date())
+        const post: Post = new Post(id, texto, this.Posts[index].autor, legenda, new Date(), this.Posts[index].curtidas)
         this.Posts[index] = post
     }
 
@@ -95,23 +125,13 @@ class RedeSocial {
         this.Posts.push()
     }
 
-    curtir_post(id: string, usuario: IAutenticavel) {
+    curtir_post(id: string, usuario: Usuario) {
         const index = this.consultar_index_post(id)
-        this.Posts[index].curtir();
+        this.Posts[index].curtir(usuario);
     }
-
-    // consultar_post_por_autor(autor: IAutenticavel): Post[] {
-    //     const posts: Post[] = []
-    //     for (let post of this.Posts) {
-    //         if (post.autor == autor) {
-    //             posts.push(post)
-    //         }
-    //     }
-    //     return posts
-    // }
 
 }
 
 import { IAutenticavel, Usuario } from "./usuarios";
-import { post_invalido, post_inexistente, post_ja_criado } from "./trata_erros";
+import { post_inexistente, post_ja_criado, ValorInvalido } from "./trata_erros";
 export { RedeSocial, Post }
