@@ -1,11 +1,10 @@
-class Usuario implements IAutenticavel {
+abstract class Usuario_base {
 
     private _id: string;
     private _nome: string;
     private _email: string;
     private _senha: string;
     private _idade: number;
-    private Redes_sociais: RedeSocial[] = []
 
     constructor(id: string, nome: string, idade: number, email: string, senha: string) {
         this._id = id;
@@ -13,6 +12,42 @@ class Usuario implements IAutenticavel {
         this._idade = idade;
         this._email = email;
         this._senha = senha;
+    }
+
+    get id(): string {
+        return this._id;
+    }
+
+    get nome(): string {
+        return this._nome;
+    }
+
+    get email(): string {
+        return this._email;
+    }
+
+    get senha(): string {
+        return this._senha;
+    }
+
+    get idade(): number {
+        return this._idade
+    }
+}
+
+
+
+interface IAutenticavel {
+    autenticar(email: string, senha: string): boolean;
+}
+
+
+class Usuario extends Usuario_base implements IAutenticavel {
+
+    private Redes_sociais: RedeSocial[] = []
+
+    constructor(id: string, nome: string, idade: number, email: string, senha: string) {
+        super(id, nome, idade, email, senha);
     }
 
     consultar_rede_social(id: string): RedeSocial {
@@ -38,10 +73,10 @@ class Usuario implements IAutenticavel {
         this.Redes_sociais.push(rede);
     }
 
-    excluir_rede_social(id_rede: string): void{
+    excluir_rede_social(id_rede: string): void {
         const index: number = this.consultar_index_rede_social(id_rede);
 
-        for(let i = index; i < this.Redes_sociais.length; i++){
+        for (let i = index; i < this.Redes_sociais.length; i++) {
             this.Redes_sociais[i] = this.Redes_sociais[i + 1]
         }
         this.Redes_sociais.push()
@@ -61,25 +96,7 @@ class Usuario implements IAutenticavel {
         const index: number = this.consultar_index_rede_social(id_rede)
         this.Redes_sociais[index].excluir_post(id_post);
     }
-    get id(): string {
-        return this.id;
-    }
 
-    get nome(): string {
-        return this.nome;
-    }
-
-    get email(): string {
-        return this.email;
-    }
-
-    get senha(): string {
-        return this.senha;
-    }
-
-    get idade(): number {
-        return this._idade
-    }
 
     autenticar(email: string, senha: string): boolean {
         if (email != this.email || senha != this.senha) {
@@ -89,19 +106,8 @@ class Usuario implements IAutenticavel {
     }
 }
 
-interface IAutenticavel {
-    autenticar(email: string, senha: string): boolean;
-}
-
-class Usuario_premium extends Usuario {
-
-    constructor(id: string, nome: string, idade: number, email: string, senha: string) {
-        super(id, nome, idade, email, senha);
-    }
-
-}
 
 
 import { login_invalido, rede_social_inexistente } from "./trata_erros"
 import { RedeSocial, Post } from "./redes_sociais"
-export { Usuario, Usuario_premium, IAutenticavel }
+export { Usuario, IAutenticavel }
