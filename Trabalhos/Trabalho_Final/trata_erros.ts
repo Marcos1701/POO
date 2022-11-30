@@ -1,5 +1,3 @@
-
-
 class ErroApp extends Error {
     constructor(mensagem: string) {
         super(mensagem);
