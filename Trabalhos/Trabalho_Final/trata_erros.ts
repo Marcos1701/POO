@@ -43,5 +43,4 @@ class ValorInvalido extends ErroApp {
 }
 
 
-
 export { login_invalido, post_invalido, post_inexistente, post_ja_criado, rede_social_inexistente, ValorInvalido }
