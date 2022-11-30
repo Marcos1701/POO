@@ -1,15 +1,31 @@
 
 function main(): void {
 
-    let Usuarios_criados: Usuario[] = []
+    let Usuarios_criados: any[] = [{
+        id: 0,
+        usuarios: []
+    }]
     let Redes_sociais_criadas: RedeSocial[] = []
     let opcao_ja_inserida: boolean = false;
+    let id: number = 0;
+
     console.log("---------- Menu ----------")
+
     let opcoes: string[] = ['1 - criar novo Usuário', '2 - Criar nova rede Social', '0 - Sair']
     let op: number = exibir_opcoes_e_coletar_retorno(opcoes)
 
     do {
         try {
+
+            if(op == 1){
+
+            }
+            if(op == 2){
+
+            }
+            if(op == 3){
+
+            }
 
 
 
@@ -44,7 +60,7 @@ function exibir_opcoes_e_coletar_retorno(opcoes: string[]): number {
     let opcao: number = Number(input("=> "))
 
     while (opcao < 0 || opcao > opcoes.length) {
-        console.log(`A opção: ${opcao} é inválida, selecione uma opção detre as a seguir: `)
+        console.log(`A opção: ${opcao} é inválida, selecione uma opção válida detre as a seguir: `)
         exibir(opcoes)
         console.log("Digite a opção desejada a seguir: ")
         opcao = Number(input("=> "))
@@ -52,17 +68,22 @@ function exibir_opcoes_e_coletar_retorno(opcoes: string[]): number {
     return opcao
 }
 
-function criar_usuario(Usuarios: Usuario[]): void {
+function criar_usuario(id: number): Usuario_V {
     console.log('----- Criar novo Usuário -----')
-    let id: string = input("Digite o id do usuario: ")
-    // const Novo_Usuario: Usuario = new Usuario()
+    const nome: string = input("Digite seu nome de usuário: ")
+    const idade: number = Number(input("Digite a sua Idade: "))
+    const login: string = input("Digite seu login: ")
+    const senha: string = input("Digite sua senha: ")
+    
+    const Novo_Usuario: Usuario_V = new Usuario_V(id, nome, idade, login, senha)
+    return Novo_Usuario
 }
 
 
 main()
 
 import { RedeSocial, Post } from './redes_sociais'
-import { Usuario } from './usuarios'
+import { Usuario_V , Repo_vetor} from './usuarios'
 import { login_invalido, post_invalido, post_inexistente, post_ja_criado, rede_social_inexistente, ValorInvalido } from './trata_erros'
 import Prompt from 'prompt-sync'
 const input = Prompt()
