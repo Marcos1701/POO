@@ -42,59 +42,40 @@ interface IAutenticavel {
 }
 
 
-class Usuario extends Usuario_base implements IAutenticavel {
 
-    private Redes_sociais: RedeSocial[] = []
 
-    constructor(id: number, nome: string, idade: number, login: string, senha: string) {
+class Usuario_V extends Usuario_base implements IAutenticavel{
+
+    private Repositorio_dados: Repositorio_redes
+
+    constructor(id: number, nome: string, idade: number, login: string, senha: string, Repositorio: Repositorio_redes) {
         super(id, nome, idade, login, senha);
+        this.Repositorio_dados = Repositorio
     }
 
     consultar_rede_social(id: number): RedeSocial {
-        for (let rede of this.Redes_sociais) {
-            if (rede.id == id) {
-                return rede
-            }
-        }
-        throw new rede_social_inexistente("Erro, rede social inexistente!!!")
-    }
-
-    private consultar_index_rede_social(id: number): number {
-        for (let i = 0; i < this.Redes_sociais.length; i++) {
-            if (this.Redes_sociais[i].id == id) {
-                return i
-            }
-        }
-        throw new rede_social_inexistente("Erro, rede social inexistente!!!")
+       return this.Repositorio_dados.consultar_rede_social(id)
     }
 
     inserir_rede_social(rede: RedeSocial): void {
-        this.consultar_rede_social(rede.id)
-        this.Redes_sociais.push(rede);
+         this.Repositorio_dados.inserir_rede_social(rede)
     }
 
     excluir_rede_social(id_rede: number): void {
-        const index: number = this.consultar_index_rede_social(id_rede);
-
-        for (let i = index; i < this.Redes_sociais.length; i++) {
-            this.Redes_sociais[i] = this.Redes_sociais[i + 1]
-        }
-        this.Redes_sociais.push()
+        this.Repositorio_dados.excluir_rede_social(id_rede)
     }
 
     inserir_novo_post(post: Post, id_rede: number): void {
-        const index: number = this.consultar_index_rede_social(id_rede);
-        this.Redes_sociais[index].inserir_post(post);
+        this.Repositorio_dados.inserir_novo_post(post, id_rede)
     }
 
     alterar_post(id_post: number, novo_txt: string, nova_legenda: string, id_rede: number): void {
-        const index: number = this.consultar_index_rede_social(id_rede);
-        this.Redes_sociais[index].alterar_post(id_post, novo_txt, nova_legenda);
+       this.Repositorio_dados.alterar_post(id_post, novo_txt, nova_legenda, id_rede)
     }
 
     excluir_post(id_post: number, id_rede: number): void {
-        const index: number = this.consultar_index_rede_social(id_rede)
-        this.Redes_sociais[index].excluir_post(id_post);
+        this.Repositorio_dados.excluir_post(id_post, id_rede);
+        
     }
 
 
@@ -110,4 +91,5 @@ class Usuario extends Usuario_base implements IAutenticavel {
 
 import { login_invalido, rede_social_inexistente } from "./trata_erros"
 import { RedeSocial, Post } from "./redes_sociais"
-export { Usuario, IAutenticavel }
+import { Repositorio_redes } from './repositorio'
+export { Usuario_V, IAutenticavel }
