@@ -6,7 +6,7 @@ class Post {
     private _curtidas: number
     private _legenda: string
     private _data: Date
-    private Usuarios_que_curtiram: Usuario[] = []
+    private Usuarios_que_curtiram: Usuario_V[] = []
 
     constructor(
         id: number,
@@ -30,8 +30,8 @@ class Post {
             throw new ValorInvalido("Erro, um dos valores inseridos é inválido!!");
         }
     }
-    curtir(usuario: Usuario): void {
-        if (usuario instanceof Usuario) {
+    curtir(usuario: Usuario_V): void {
+        if (usuario instanceof Usuario_V) {
             this._curtidas++;
             this.Usuarios_que_curtiram.push(usuario)
         }
@@ -126,13 +126,13 @@ class RedeSocial {
         this.Posts.push()
     }
 
-    curtir_post(id: number, usuario: Usuario) {
+    curtir_post(id: number, usuario: Usuario_V) {
         const index = this.consultar_index_post(id)
         this.Posts[index].curtir(usuario);
     }
 
 }
 
-import { IAutenticavel, Usuario } from "./usuarios";
+import { IAutenticavel, Usuario_V } from "./usuarios";
 import { post_inexistente, post_ja_criado, ValorInvalido } from "./trata_erros";
 export { RedeSocial, Post }
