@@ -34,6 +34,12 @@ class rede_social_inexistente extends ErroApp {
     }
 }
 
+class rede_social_ja_existente extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
+
 class ValorInvalido extends ErroApp {
     constructor(msg: string) {
         super(msg);
@@ -41,4 +47,4 @@ class ValorInvalido extends ErroApp {
 }
 
 
-export { login_invalido, post_invalido, post_inexistente, post_ja_criado, rede_social_inexistente, ValorInvalido }
+export { login_invalido, post_invalido, post_inexistente, post_ja_criado, rede_social_inexistente, ValorInvalido, rede_social_ja_existente }
