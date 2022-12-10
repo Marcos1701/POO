@@ -1,3 +1,0 @@
-# Trabalho final
-
-- HEHE...
