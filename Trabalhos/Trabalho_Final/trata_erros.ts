@@ -46,5 +46,35 @@ class ValorInvalido extends ErroApp {
     }
 }
 
+class Valor_inexistente extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
 
-export { login_invalido, post_invalido, post_inexistente, post_ja_criado, rede_social_inexistente, ValorInvalido, rede_social_ja_existente }
+class erro_inesperado extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
+
+class usuario_inexistente extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
+
+class usuario_ja_criado extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
+
+export {
+    login_invalido, post_invalido,
+    post_inexistente, post_ja_criado,
+    rede_social_inexistente, ValorInvalido,
+    rede_social_ja_existente, Valor_inexistente,
+    erro_inesperado, usuario_inexistente,
+    usuario_ja_criado
+}
