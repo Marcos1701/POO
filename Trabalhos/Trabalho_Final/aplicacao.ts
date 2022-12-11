@@ -130,7 +130,6 @@ function opcoes_para_usuario(): void {
             if (op == 2) {
                 opcoes_para_rede_social()
             }
-
         } catch (e: any) {
             console.error(e)
         } finally {
@@ -155,7 +154,7 @@ function opcoes_para_rede_social(): void {
     while (op_rede_social != 0) {
         try {
             if (op_rede_social == 1) {
-                criar_post(rede_social)
+                repo_aplicacao.inserir_post(id_rede_social, criar_post(rede_social))
             }
             if (op_rede_social == 2) {
                 let id_post: number = Number(input("Digite o id do post que deseja curtir: "))
@@ -170,10 +169,10 @@ function opcoes_para_rede_social(): void {
             }
 
             if (op_rede_social == 5) {
-                let id_post: number = Number(input("Digite o id do post que deseja alterar: "))
-                let post: Post = rede_social.consultar_post(id_post)
-                let texto: string = input("Digite o novo texto do post: ")
-                let legenda: string = input("Digite a nova legenda do post: ")
+                const id_post: number = Number(input("Digite o id do post que deseja alterar: "))
+                const post: Post = rede_social.consultar_post(id_post)
+                const texto: string = input("Digite o novo texto do post: ")
+                const legenda: string = input("Digite a nova legenda do post: ")
 
                 const novo_post: Post = new Post(id_post, texto, repo_aplicacao.usuario_logado, legenda, post.data, post.curtidas)
                 repo_aplicacao.alterar_post(novo_post, id_rede_social)
