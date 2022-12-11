@@ -31,6 +31,10 @@ class lista_duplamente_encadeada<T> {
     _inicio: No<T> | null = null
     _fim: No<T> | null = this._inicio
 
+    private no(valor: T): No<T> {
+        return new No<T>(valor)
+    }
+
     get inicio(): No<T> | null {
         return this._inicio
     }
@@ -39,7 +43,7 @@ class lista_duplamente_encadeada<T> {
     }
 
     push(Valor: T): void {
-        const no_valor: No<T> = new No<T>(Valor)
+        const no_valor: No<T> = this.no(Valor)
         if (this._inicio == null) {
             this._inicio = no_valor
         } else {
@@ -569,3 +573,4 @@ class Dados_Aplicacao {
     }
 
 }
+
