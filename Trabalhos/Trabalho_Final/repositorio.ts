@@ -6,7 +6,7 @@ import {
     post_inexistente, erro_inesperado,
     post_ja_criado, usuario_inexistente,
     login_invalido, usuario_ja_criado,
-    usuario_nao_logado
+    usuario_nao_logado, ValorInvalido
 } from "./trata_erros";
 export { Dados_Aplicacao, No, repo_redes_sociais as repo_rede_social, repo_post }
 
@@ -17,12 +17,17 @@ interface Repositorio_encadeado<T> {
 }
 
 class No<T>{
+    id: number
     Valor: T
     proximo: No<T> | null = null
     anterior: No<T> | null = null;
 
     constructor(valor: T) {
+        if (!(valor instanceof Usuario || valor instanceof RedeSocial || valor instanceof Post)) {
+            throw new ValorInvalido("Erro!!")
+        }
         this.Valor = valor
+        this.id = valor.id
     }
 
 }
@@ -46,9 +51,13 @@ class lista_duplamente_encadeada<T> {
         const no_valor: No<T> = this.no(Valor)
         if (this._inicio == null) {
             this._inicio = no_valor
-        } else {
-            no_valor.anterior = this._fim
             this._fim = no_valor
+        } else {
+            if (this._fim) {
+                this._fim.proximo = no_valor
+                no_valor.anterior = this._fim
+                this._fim = no_valor
+            }
         }
     }
 
@@ -67,27 +76,30 @@ class lista_duplamente_encadeada<T> {
         if (no_aux.Valor == valor) {
             this._inicio = no_aux.proximo
         }
+        if (!(valor instanceof Usuario || valor instanceof RedeSocial || valor instanceof Post)) {
+            throw new ValorInvalido("Erro!!")
+        }
 
         while (no_aux) {
-            if (no_aux.Valor == valor) {
+            if (no_aux.id == valor.id) {
                 if (no_aux.anterior) {
                     no_aux.anterior.proximo = no_aux.proximo
                 }
                 if (no_aux.proximo) {
                     no_aux.proximo.anterior = no_aux.anterior
                 }
+                if (no_aux == this._fim) {
+                    this._fim = no_aux.anterior
+                }
                 break
             }
         }
-        if (this._fim && this._fim.Valor == valor) {
-            this._fim = this._fim.anterior
-        }
     }
+
     front(): T {
         if (this._inicio == null) { throw new Valor_inexistente("") }
         return this._inicio.Valor
     }
-
 
     isEmpty(): boolean {
         return (this._inicio == null)
@@ -171,7 +183,6 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
                 throw new usuario_ja_criado("Erro, o login inserido já foi utilizado por outro usuário!!")
             }
         }
-
     }
 
     autenticar(login: string, senha: string): Usuario {
@@ -210,7 +221,6 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
         }
     }
 
-
     descurtir_post(id_post: number, id_rede: number, id_usuario: number): void {
         try {
             this.consultar(id_usuario).Valor.descurtir_post(id_rede, id_post)
@@ -236,7 +246,6 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
         const rede: RedeSocial = usuario.consultar_rede_social(id_rede)
         rede.visualizar_todos_os_posts()
     }
-
 
     get qtd(): number {
         return this.lista_usuarios.size()
@@ -280,6 +289,7 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         let no_aux: No<RedeSocial> | null = this._redes_sociais.inicio
         console.log("Redes Sociais Cadastradas:\n")
         console.log("ID - nome da Rede Social")
+
         while (no_aux) {
             console.log(`${no_aux.Valor.id} - ${no_aux.Valor.nome}`)
             no_aux = no_aux.proximo
@@ -290,7 +300,7 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         let no: No<RedeSocial> | null = this._redes_sociais._inicio
 
         while (no) {
-            if (no.Valor.id == id) {
+            if (no.id == id) {
                 return no
             }
         }
@@ -379,7 +389,7 @@ class repo_post implements Repositorio_encadeado<Post>{
         let no: No<Post> | null = this._posts._inicio
 
         while (no) {
-            if (no.Valor.id == id) {
+            if (no.id == id) {
                 return no
             }
         }
@@ -422,19 +432,19 @@ class repo_post implements Repositorio_encadeado<Post>{
     }
 
     visualizar(id: number): void {
-        let aux: No<Post> = this.consultar(id)
+        const aux: No<Post> = this.consultar(id)
         aux.Valor.visualizar()
     }
 
     alterar(post: Post): void {
-        let aux: No<Post> = this.consultar(post.id)
+        const aux: No<Post> = this.consultar(post.id)
         aux.Valor = post
     }
 
     visualizar_todos(): void {
         if (this._posts.inicio == null) throw new post_inexistente("Erro, não há posts cadastrados!!!")
-        let aux: No<Post> = this._posts.inicio
-        while (aux.proximo) {
+        let aux: No<Post> | null = this._posts.inicio
+        while (aux) {
             aux.Valor.visualizar()
             aux = aux.proximo
         }
@@ -480,7 +490,9 @@ class Dados_Aplicacao {
 
     inserir_rede_social_em_usuario(id_rede: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
-        this.armazena_usuarios.inserir_nova_rede(this.armazena_redes.consultar(id_rede).Valor, this._usuario_logado.id)
+        const rede_social: RedeSocial = this.armazena_redes.consultar(id_rede).Valor
+        this.armazena_usuarios.inserir_nova_rede(rede_social, this._usuario_logado.id)
+        this._usuario_logado.inserir_rede_social(rede_social)
     }
 
     excluir_rede_de_um_usuario(id_rede: number): void {
@@ -531,7 +543,14 @@ class Dados_Aplicacao {
     }
 
     exibir_redes_sociais_disponiveis(): void {
-        this.armazena_redes.exibir_redes()
+        let aux: No<RedeSocial> | null = this.armazena_redes.inicio
+
+        console.log("Redes disponíveis: \n")
+
+        while (aux) {
+            console.log(`ID : ${aux.Valor.id}, Nome: ${aux.Valor.nome}`)
+            aux = aux.proximo
+        }
     }
 
     visualizar_post(id_rede: number, id_post: number): void {
