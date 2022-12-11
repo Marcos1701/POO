@@ -70,11 +70,24 @@ class usuario_ja_criado extends ErroApp {
     }
 }
 
+class usuario_invalido extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
+
+class usuario_nao_logado extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
+
 export {
     login_invalido, post_invalido,
     post_inexistente, post_ja_criado,
     rede_social_inexistente, ValorInvalido,
     rede_social_ja_existente, Valor_inexistente,
     erro_inesperado, usuario_inexistente,
-    usuario_ja_criado
+    usuario_ja_criado, usuario_invalido,
+    usuario_nao_logado
 }
