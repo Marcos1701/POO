@@ -41,9 +41,8 @@ function main(): void {
                     throw new login_invalido("Erro, você já está logado!!")
                 }
                 realizar_login()
-                usuario_ja_logado = true;
-
-                if (usuario) { console.log(`Olá ${usuario.nome}, seja bem vindo!!\n`) }
+                usuario = repo_aplicacao.usuario_logado
+                console.log(`Olá ${usuario.nome}, seja bem vindo!!\n`)
 
                 opcoes = ['1 - criar novo Usuário', '2 - Realizar Login de usuário', '3 - Criar nova rede Social',
                     '4 - excluir rede social', '5 - excluir usuario', '6 - Opções de usuario', '7 - deslogar', '0 - Sair']
@@ -72,10 +71,10 @@ function main(): void {
 
             if (op == 5) {
                 realizar_login()
-                if (usuario) {
-                    id_usuarios_excluidos.push(usuario.id)
-                    repo_aplicacao.excluir_usuario(usuario.id)
-                }
+                usuario = repo_aplicacao.usuario_logado
+                id_usuarios_excluidos.push(usuario.id)
+                repo_aplicacao.excluir_usuario(usuario.id)
+                repo_aplicacao.deslogar_usuario()
             }
 
             if (op == 6) {
@@ -83,8 +82,7 @@ function main(): void {
             }
 
             if (op == 7) {
-                usuario = null
-                usuario_ja_logado = false;
+                repo_aplicacao.deslogar_usuario()
                 opcoes = ['1 - criar novo Usuário', '2 - Realizar Login de usuário', '3 - Criar nova rede Social', '4 - excluir rede social', '0 - Sair']
             }
 
@@ -111,7 +109,7 @@ function main(): void {
 function realizar_login(): void {
     const login: string = input("Digite seu login: ")
     const senha: string = input("Digite sua senha: ")
-    usuario = repo_aplicacao.autenticar_usuario(login, senha)
+    repo_aplicacao.autenticar_usuario(login, senha)
 }
 
 function opcoes_para_usuario(): void {
@@ -125,8 +123,8 @@ function opcoes_para_usuario(): void {
             if (op == 1) {
                 repo_aplicacao.exibir_redes_sociais_disponiveis()
                 console.log("Digite o id da rede social que deseja adicionar: ")
-                const id: number = coletar_opcao_valida(1, repo_aplicacao.qtd_redes())
-                repo_aplicacao.inserir_rede_social_em_usuario(usuario.id, id)
+                const id: number = coletar_opcao_valida(0, repo_aplicacao.qtd_redes())
+                repo_aplicacao.inserir_rede_social_em_usuario(id)
             }
 
             if (op == 2) {
@@ -145,45 +143,48 @@ function opcoes_para_usuario(): void {
 
 
 function opcoes_para_rede_social(): void {
-    if (usuario == null) { throw new usuario_inexistente("Erro, você não está logado!!") }
-    usuario = repo_aplicacao.consultar_usuario(usuario.id)
+    if (!repo_aplicacao.logado) { throw new usuario_inexistente("Erro, você não está logado!!") }
+    repo_aplicacao.exibir_redes_sociais_do_usuario()
 
-    usuario.exibir_redes_sociais()
     let id_rede_social: number = Number(input("Digite o ID da rede social que deseja acessar: "))
-    let rede_social: RedeSocial = usuario.consultar_rede_social(id_rede_social)
-    let opcoes_rede_social: string[] = ['1 - Criar novo post', '2 - Curtir post', '3 - Excluir post', '4 - visualizar post', '5 - alterar post', '6 - excluir rede social', '0 - Sair']
+    let rede_social: RedeSocial = repo_aplicacao.consultar_rede_do_usuario(id_rede_social)
+    let opcoes_rede_social: string[] = ['1 - Criar novo post', '2 - Curtir post', '3 - Excluir post', '4 - visualizar post', '5 - alterar post', '6 - visualizar todos os posts', '7 - excluir rede social', '0 - Sair']
     let aba_rede_social: string = 'Menu da Rede Social'
     let op_rede_social: number = exibir_opcoes_e_coletar_retorno(aba_rede_social, opcoes_rede_social)
+
     while (op_rede_social != 0) {
         try {
-
             if (op_rede_social == 1) {
                 criar_post(rede_social)
             }
             if (op_rede_social == 2) {
                 let id_post: number = Number(input("Digite o id do post que deseja curtir: "))
-                repo_aplicacao.curtir_post(usuario.id, id_rede_social, id_post)
+                repo_aplicacao.curtir_post(id_rede_social, id_post)
             }
             if (op_rede_social == 3) {
                 let id_post: number = Number(input("Digite o id do post que deseja excluir: "))
-                repo_aplicacao.excluir_post(usuario.id, id_rede_social, id_post)
-
+                repo_aplicacao.excluir_post(id_rede_social, id_post)
             }
             if (op_rede_social == 4) {
                 visualizar_post(rede_social)
             }
+
             if (op_rede_social == 5) {
                 let id_post: number = Number(input("Digite o id do post que deseja alterar: "))
                 let post: Post = rede_social.consultar_post(id_post)
                 let texto: string = input("Digite o novo texto do post: ")
                 let legenda: string = input("Digite a nova legenda do post: ")
 
-                const novo_post: Post = new Post(id_post, texto, usuario, legenda, post.data, post.curtidas)
-                repo_aplicacao.alterar_post(usuario.id, novo_post, id_rede_social)
+                const novo_post: Post = new Post(id_post, texto, repo_aplicacao.usuario_logado, legenda, post.data, post.curtidas)
+                repo_aplicacao.alterar_post(novo_post, id_rede_social)
             }
 
             if (op_rede_social == 6) {
-                repo_aplicacao.excluir_rede_de_um_usuario(usuario.id, id_rede_social)
+                repo_aplicacao.visualizar_posts_de_rede_social(id_rede_social)
+            }
+
+            if (op_rede_social == 7) {
+                repo_aplicacao.excluir_rede_de_um_usuario(id_rede_social)
             }
         } catch (e: any) {
             if (e instanceof post_invalido || e instanceof post_inexistente
@@ -195,18 +196,17 @@ function opcoes_para_rede_social(): void {
         } finally {
             input("Pressione enter para continuar...")
             op_rede_social = exibir_opcoes_e_coletar_retorno(aba_rede_social, opcoes_rede_social)
-            usuario = repo_aplicacao.consultar_usuario(usuario.id)
         }
     }
 }
 
 function criar_post(rede: RedeSocial): Post {
-    if (usuario == null) { throw new usuario_inexistente("Erro, você não está logado!!") }
+    if (!repo_aplicacao.logado) { throw new usuario_inexistente("Erro, você não está logado!!") }
 
     const texto: string = input("Digite o texto do seu post: ")
     const legenda: string = input("Digite a legenda do seu post: ")
 
-    let post: Post = new Post(rede.id_post, texto, usuario, legenda, new Date())
+    let post: Post = new Post(rede.id_post, texto, repo_aplicacao.usuario_logado, legenda, new Date())
     return post
 }
 
