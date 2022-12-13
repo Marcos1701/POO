@@ -53,15 +53,17 @@ function main(): void {
             if (op == 3) {
                 console.log('----- Criar nova Rede Social -----')
                 const nome: string = input("Digite o nome da rede social: ")
+                const url: string = input("Digite a url da rede social: ")
                 let Nova_Rede_Social: RedeSocial
                 if (id_redes_excluidas.length > 0) {
-                    Nova_Rede_Social = new RedeSocial(id_redes_excluidas[0], nome)
+                    Nova_Rede_Social = new RedeSocial(id_redes_excluidas[0], nome, url)
                     id_redes_excluidas.shift()
                 } else {
-                    Nova_Rede_Social = new RedeSocial(id_redes, nome)
+                    Nova_Rede_Social = new RedeSocial(id_redes, nome, url)
                     id_redes++
                 }
                 repo_aplicacao.inserir_rede(Nova_Rede_Social)
+                console.log("\nRede Social cadastrada com sucesso!!")
             }
 
             if (op == 4) {
@@ -124,6 +126,8 @@ function opcoes_para_usuario(): void {
                 console.log("Digite o id da rede social que deseja adicionar: ")
                 let id_rede: number = coletar_valor_valido(opcoes_validas)
                 repo_aplicacao.inserir_rede_social_em_usuario(id_rede)
+
+                console.log("\nRede Social inserida com sucesso!!\n")
             }
 
             if (op == 2) {
@@ -144,14 +148,15 @@ function opcoes_para_usuario(): void {
 
 
 function opcoes_para_rede_social(): void {
-    if (!repo_aplicacao.logado) { throw new usuario_inexistente("Erro, você não está logado!!") }
+    if (repo_aplicacao.usuario_logado == null) { throw new usuario_inexistente("Erro, você não está logado!!") }
     if (repo_aplicacao.Qtd_redes_usuario(repo_aplicacao.usuario_logado.id) <= 0) {
         throw new rede_social_inexistente("Erro, não há redes sociais cadastradas nesse usuario!!")
     }
 
     repo_aplicacao.exibir_redes_sociais_do_usuario()
 
-    let id_rede_social: number = Number(input("Digite o ID da rede social que deseja acessar: "))
+    console.log("Digite o ID da rede social que deseja acessar: ")
+    let id_rede_social: number = coletar_valor_valido(repo_aplicacao.usuario_logado.ids_redes())
     let rede_social: RedeSocial = repo_aplicacao.consultar_rede_do_usuario(id_rede_social)
     let opcoes_rede_social: string[] = ['1 - Criar novo post', '2 - Curtir post', '3 - Excluir post', '4 - visualizar post', '5 - alterar post', '6 - visualizar todos os posts', '7 - excluir rede social', '0 - Sair']
     let aba_rede_social: string = 'Menu da Rede Social'
@@ -161,24 +166,37 @@ function opcoes_para_rede_social(): void {
         try {
             if (op_rede_social == 1) {
                 repo_aplicacao.inserir_post(id_rede_social, criar_post(rede_social))
+                console.log("\nPost criado com sucesso!!\n")
             }
             if (op_rede_social == 2) {
                 curtir_post(id_rede_social)
             }
             if (op_rede_social == 3) {
-                let id_post: number = Number(input("Digite o id do post que deseja excluir: "))
+                console.log("------ Excluir Post -----")
+                if (rede_social.qtd_posts() <= 0) { throw new post_inexistente("Ops, não há posts para excluir!!") }
+                console.log("Posts já inseridos pelo usuario: ")
+                repo_aplicacao.visualizar_posts_de_rede_social_de_um_usuario(id_rede_social, repo_aplicacao.usuario_logado.id)
+
+                console.log("Digite o id do post que deseja excluir: ")
+                let id_post: number = coletar_valor_valido(rede_social.ids_posts())
                 repo_aplicacao.excluir_post(id_rede_social, id_post)
+
+                console.log("\nPost excluido com sucesso!!\n")
             }
             if (op_rede_social == 4) {
                 visualizar_post(rede_social)
             }
             if (op_rede_social == 5) {
-                const id_post: number = Number(input("Digite o id do post que deseja alterar: "))
+
+                console.log("Digite o id do post que deseja alterar: ")
+                const id_post: number = coletar_valor_valido(rede_social.ids_posts())
                 const post: Post = rede_social.consultar_post(id_post)
                 const texto: string = input("Digite o novo texto do post: ")
                 const legenda: string = input("Digite a nova legenda do post: ")
                 const novo_post: Post = new Post(id_post, texto, repo_aplicacao.usuario_logado, legenda, post.data, post.curtidas)
                 repo_aplicacao.alterar_post(novo_post, id_rede_social)
+
+                console.log("\nPost alterado com sucesso!!")
             }
 
             if (op_rede_social == 6) {
@@ -187,7 +205,10 @@ function opcoes_para_rede_social(): void {
 
             if (op_rede_social == 7) {
                 repo_aplicacao.excluir_rede_de_um_usuario(id_rede_social)
+                console.log("Rede social excluida com sucesso!!")
             }
+
+
         } catch (e: any) {
             if (e instanceof post_invalido || e instanceof post_inexistente
                 || e instanceof rede_social_inexistente || e instanceof ValorInvalido) {
@@ -197,8 +218,23 @@ function opcoes_para_rede_social(): void {
             }
         } finally {
             input("Pressione enter para continuar...")
+
+            if (op_rede_social == 7) {
+                if (repo_aplicacao.Qtd_redes_usuario(repo_aplicacao.usuario_logado.id) <= 0) {
+                    console.log("\nOps, este usuario não possui mais redes sociais cadastradas!!\n")
+                    break
+                } else {
+                    repo_aplicacao.exibir_redes_sociais_do_usuario()
+
+                    console.log("\nDigite o ID da rede social que deseja acessar: ")
+                    id_rede_social = coletar_valor_valido(repo_aplicacao.usuario_logado.ids_redes())
+                }
+
+            }
+
             op_rede_social = exibir_opcoes_e_coletar_retorno(aba_rede_social, opcoes_rede_social)
             rede_social = repo_aplicacao.consultar_rede_do_usuario(id_rede_social)
+
         }
     }
 }
