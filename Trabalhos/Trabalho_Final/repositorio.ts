@@ -1,12 +1,13 @@
 import { RedeSocial, Post } from "./redes_sociais"
 import { Usuario } from "./usuarios";
 import {
-    rede_social_inexistente, rede_social_ja_existente,
+    rede_social_inexistente, rede_social_ja_cadastrada,
     Valor_inexistente, usuario_invalido,
     post_inexistente, erro_inesperado,
     post_ja_criado, usuario_inexistente,
     login_invalido, usuario_ja_criado,
-    usuario_nao_logado, ValorInvalido
+    usuario_nao_logado, ValorInvalido,
+    usuario_ja_inserido_na_rede
 } from "./trata_erros";
 export { Dados_Aplicacao, No, repo_redes_sociais as repo_rede_social, repo_post }
 
@@ -195,6 +196,7 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
 
     inserir_nova_rede(rede: RedeSocial, id_usuario: number): void {
         let no: No<Usuario> = this.consultar(id_usuario)
+        console.log(no.Valor.nome)
         no.Valor.inserir_rede_social(rede)
     }
 
@@ -221,15 +223,6 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
         }
     }
 
-    descurtir_post(id_post: number, id_rede: number, id_usuario: number): void {
-        try {
-            this.consultar(id_usuario).Valor.descurtir_post(id_rede, id_post)
-        } catch (e: any) {
-            if (e instanceof post_inexistente) {
-                throw new post_inexistente("Erro, Post não encontrado!!!")
-            }
-        }
-    }
 
     alterar_post(novo_post: Post, id_rede: number, id_usuario: number): void {
         this.consultar(id_usuario).Valor.alterar_post(novo_post, id_rede)
@@ -275,11 +268,12 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
     inserir(rede_social: RedeSocial): void {
         try {
             this.consultar_rede(rede_social.id, rede_social.nome)
+            console.log(rede_social.nome)
         } catch (e: any) {
             if (e instanceof rede_social_inexistente) {
                 this._redes_sociais.push(rede_social)
             } else {
-                throw new rede_social_ja_existente("Erro, a rede social já foi inserida anteriormente!!")
+                throw new rede_social_ja_cadastrada("Erro, a rede social já foi inserida anteriormente!!")
             }
         }
     }
@@ -291,8 +285,48 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         console.log("ID - nome da Rede Social")
 
         while (no_aux) {
-            console.log(`${no_aux.Valor.id} - ${no_aux.Valor.nome}`)
+            console.log(`${no_aux.Valor.id} - ${no_aux.Valor.nome}\n`)
             no_aux = no_aux.proximo
+        }
+    }
+
+    ids_ja_utilizados(): number[] {
+        let ids_redes: number[] = []
+
+        let no_aux: No<RedeSocial> | null = this.inicio
+
+        while (no_aux) {
+            ids_redes.push(no_aux.id)
+            no_aux = no_aux.proximo
+        }
+        return ids_redes
+    }
+
+    consultar_usuarios_cadastrados_em_det_rede_social(id_rede: number, id_usuario_principal: number): number[] {
+        const rede_social: RedeSocial = this.consultar(id_rede).Valor
+        const usuarios_da_rede: Usuario[] = rede_social.usuarios_da_rede
+        let ids_usuarios: number[] = []
+
+        for (let i = 0; i < usuarios_da_rede.length; i++) {
+            if (usuarios_da_rede[i].id != id_usuario_principal) {
+                console.log(`ID: ${usuarios_da_rede[i].id}`)
+                console.log(`Nome: ${usuarios_da_rede[i].nome}\n`)
+                ids_usuarios.push(usuarios_da_rede[i].id)
+            }
+        }
+        return ids_usuarios
+    }
+
+    inserir_usuario_em_rede_social(id_rede: number, usuario: Usuario): void {
+        const rede_social: RedeSocial = this.consultar(id_rede).Valor
+        try {
+            rede_social.consultar_usuario(usuario.id)
+        } catch (e: any) {
+            if (e instanceof usuario_inexistente) {
+                rede_social.usuarios_da_rede.push(usuario)
+            } else {
+                throw new usuario_ja_inserido_na_rede("O usuario já foi inserido anteriormente na rede!!")
+            }
         }
     }
 
@@ -303,8 +337,8 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
             if (no.id == id) {
                 return no
             }
+            no = no.proximo
         }
-
         throw new rede_social_inexistente("Erro, Rede Social não encontrada!!!")
     }
 
@@ -318,7 +352,6 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         }
     }
 
-
     inserir_novo_post(post: Post, id: number): void {
         let aux: No<RedeSocial> = this.consultar(id)
         aux.Valor.inserir_post(post)
@@ -329,9 +362,9 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         aux.Valor.excluir_post(id_post)
     }
 
-    curtir_post(id_post: number, id: number): void {
+    curtir_post(id_post: number, id_rede: number): void {
         try {
-            let aux: No<RedeSocial> = this.consultar(id)
+            let aux: No<RedeSocial> = this.consultar(id_rede)
             aux.Valor.curtir_post(id_post)
         } catch (e: any) {
             if (e instanceof post_inexistente) {
@@ -340,16 +373,6 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         }
     }
 
-    descurtir_post(id_post: number, id: number): void {
-        try {
-            let aux: No<RedeSocial> = this.consultar(id)
-            aux.Valor.descurtir_post(id_post)
-        } catch (e: any) {
-            if (e instanceof post_inexistente) {
-                throw new post_inexistente("Erro, Post não encontrado!!!")
-            }
-        }
-    }
 
     visualizar_post(id_post: number, id: number): void {
         try {
@@ -385,6 +408,7 @@ class repo_post implements Repositorio_encadeado<Post>{
     get inicio(): No<Post> | null {
         return this._posts.inicio
     }
+
     consultar(id: number): No<Post> {
         let no: No<Post> | null = this._posts._inicio
 
@@ -392,6 +416,7 @@ class repo_post implements Repositorio_encadeado<Post>{
             if (no.id == id) {
                 return no
             }
+            no = no.proximo
         }
         throw new post_inexistente("Erro, Post não encontrado!!!")
     }
@@ -410,7 +435,7 @@ class repo_post implements Repositorio_encadeado<Post>{
 
     excluir(id: number): void {
         try {
-            let post: Post = this.consultar(id).Valor
+            const post: Post = this.consultar(id).Valor
             this._posts.pop_valor(post)
         } catch (e: any) {
             if (e instanceof post_inexistente) {
@@ -422,14 +447,10 @@ class repo_post implements Repositorio_encadeado<Post>{
     }
 
     curtir(id: number): void {
-        let aux: No<Post> = this.consultar(id)
+        const aux: No<Post> = this.consultar(id)
         aux.Valor.curtir()
     }
 
-    descurtir(id: number): void {
-        let aux: No<Post> = this.consultar(id)
-        aux.Valor.descurtir()
-    }
 
     visualizar(id: number): void {
         const aux: No<Post> = this.consultar(id)
@@ -488,16 +509,23 @@ class Dados_Aplicacao {
         }
     }
 
+    private atualizar_usuario(): void { //não sei se faria alguma diferença, mas..
+        if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
+        this._usuario_logado = this.armazena_usuarios.consultar(this._usuario_logado.id).Valor
+    }
+
     inserir_rede_social_em_usuario(id_rede: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
         const rede_social: RedeSocial = this.armazena_redes.consultar(id_rede).Valor
         this.armazena_usuarios.inserir_nova_rede(rede_social, this._usuario_logado.id)
-        this._usuario_logado.inserir_rede_social(rede_social)
+        this.armazena_redes.inserir_usuario_em_rede_social(id_rede, this._usuario_logado)
+        this.atualizar_usuario()
     }
 
     excluir_rede_de_um_usuario(id_rede: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
         this.armazena_usuarios.excluir_rede(id_rede, this._usuario_logado.id)
+        this.atualizar_usuario()
     }
 
     exibir_redes_sociais_do_usuario(): void {
@@ -510,19 +538,31 @@ class Dados_Aplicacao {
         return this._usuario_logado.consultar_rede_social(id_rede)
     }
 
+    Qtd_redes_usuario(id_usuario: number): number {
+        const usuario: Usuario = this.armazena_usuarios.consultar(id_usuario).Valor
+        return usuario.qtd_redes()
+    }
+
+    consultar_usuarios_cadastrados_em_det_rede_social(id_rede: number, id_usuario: number): number[] {
+        return this.armazena_redes.consultar_usuarios_cadastrados_em_det_rede_social(id_rede, id_usuario)
+    }
+
     inserir_post(id_rede: number, post: Post): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
         this.armazena_usuarios.inserir_novo_post(post, id_rede, this._usuario_logado.id)
+        this.atualizar_usuario()
     }
 
     excluir_post(id_rede: number, id_post: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
         this.armazena_usuarios.excluir_post(id_post, id_rede, this._usuario_logado.id)
+        this.atualizar_usuario()
     }
 
-    curtir_post(id_rede: number, id_post: number): void {
+    curtir_post(id_rede: number, id_post: number, id_usuario: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
-        this.armazena_usuarios.curtir_post(id_post, id_rede, this._usuario_logado.id)
+        this.armazena_usuarios.curtir_post(id_post, id_rede, id_usuario)
+        this.atualizar_usuario()
     }
 
     consultar_usuario(id: number): Usuario {
@@ -542,15 +582,14 @@ class Dados_Aplicacao {
         this.armazena_redes.excluir(id);
     }
 
-    exibir_redes_sociais_disponiveis(): void {
+    exibir_redes_sociais_disponiveis(): number[] {
         let aux: No<RedeSocial> | null = this.armazena_redes.inicio
-
         console.log("Redes disponíveis: \n")
-
         while (aux) {
             console.log(`ID : ${aux.Valor.id}, Nome: ${aux.Valor.nome}`)
             aux = aux.proximo
         }
+        return this.armazena_redes.ids_ja_utilizados()
     }
 
     visualizar_post(id_rede: number, id_post: number): void {
@@ -558,10 +597,11 @@ class Dados_Aplicacao {
         this.armazena_usuarios.visualizar_post(id_post, id_rede, this._usuario_logado.id)
     }
 
-    visualizar_posts_de_rede_social(id_rede: number): void {
+    visualizar_posts_de_rede_social_de_um_usuario(id_rede: number, id_usuario: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
-        this.armazena_usuarios.visualizar_posts_de_rede_social(id_rede, this._usuario_logado.id)
+        this.armazena_usuarios.visualizar_posts_de_rede_social(id_rede, id_usuario)
     }
+
     autenticar_usuario(login: string, senha: string): void {
         if (this.armazena_usuarios.autenticar(login, senha)) {
             this._usuario_logado = this.armazena_usuarios.consultar_conta(login).Valor
@@ -571,8 +611,8 @@ class Dados_Aplicacao {
     alterar_post(novo_post: Post, id_rede: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
         this.armazena_usuarios.alterar_post(novo_post, id_rede, this._usuario_logado.id)
+        this.atualizar_usuario()
     }
-
 
     qtd_usuarios(): number {
         const qtd: number = this.armazena_usuarios.qtd
