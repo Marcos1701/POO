@@ -196,7 +196,6 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
 
     inserir_nova_rede(rede: RedeSocial, id_usuario: number): void {
         let no: No<Usuario> = this.consultar(id_usuario)
-        console.log(no.Valor.nome)
         no.Valor.inserir_rede_social(rede)
     }
 
@@ -222,7 +221,6 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
             }
         }
     }
-
 
     alterar_post(novo_post: Post, id_rede: number, id_usuario: number): void {
         this.consultar(id_usuario).Valor.alterar_post(novo_post, id_rede)
@@ -253,6 +251,10 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         return this._redes_sociais.inicio
     }
 
+    get qtd(): number {
+        return this._redes_sociais.size()
+    }
+
     consultar_rede(id: number, nome: string): No<RedeSocial> {
 
         let no_aux: No<RedeSocial> | null = this._redes_sociais._inicio
@@ -268,7 +270,6 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
     inserir(rede_social: RedeSocial): void {
         try {
             this.consultar_rede(rede_social.id, rede_social.nome)
-            console.log(rede_social.nome)
         } catch (e: any) {
             if (e instanceof rede_social_inexistente) {
                 this._redes_sociais.push(rede_social)
@@ -282,10 +283,11 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
         if (this._redes_sociais.inicio == null) throw new rede_social_inexistente("Erro, não há redes sociais cadastradas!!")
         let no_aux: No<RedeSocial> | null = this._redes_sociais.inicio
         console.log("Redes Sociais Cadastradas:\n")
-        console.log("ID - nome da Rede Social")
 
         while (no_aux) {
-            console.log(`${no_aux.Valor.id} - ${no_aux.Valor.nome}\n`)
+            console.log(`ID: ${no_aux.Valor.id}`)
+            console.log(`NOME: ${no_aux.Valor.nome}`)
+            console.log(`URL: ${no_aux.Valor.url}`)
             no_aux = no_aux.proximo
         }
     }
@@ -350,6 +352,11 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
                 throw new rede_social_inexistente("Erro, Rede Social não encontrada!!!")
             }
         }
+    }
+
+    excluir_usuario_da_rede(id_rede: number, id_usuario: number): void {
+        const rede_social: RedeSocial = this.consultar(id_rede).Valor
+        rede_social.excluir_usuario(id_usuario)
     }
 
     inserir_novo_post(post: Post, id: number): void {
@@ -419,6 +426,10 @@ class repo_post implements Repositorio_encadeado<Post>{
             no = no.proximo
         }
         throw new post_inexistente("Erro, Post não encontrado!!!")
+    }
+
+    qtd(): number {
+        return this._posts.size()
     }
 
     inserir(valor: Post): void {
@@ -525,6 +536,7 @@ class Dados_Aplicacao {
     excluir_rede_de_um_usuario(id_rede: number): void {
         if (this._usuario_logado == null) { throw new usuario_nao_logado("Erro, você não está logado!!!") }
         this.armazena_usuarios.excluir_rede(id_rede, this._usuario_logado.id)
+        this.armazena_redes.excluir_usuario_da_rede(id_rede, this._usuario_logado.id)
         this.atualizar_usuario()
     }
 
@@ -586,7 +598,9 @@ class Dados_Aplicacao {
         let aux: No<RedeSocial> | null = this.armazena_redes.inicio
         console.log("Redes disponíveis: \n")
         while (aux) {
-            console.log(`ID : ${aux.Valor.id}, Nome: ${aux.Valor.nome}`)
+            console.log(`ID : ${aux.Valor.id}`)
+            console.log(`Nome: ${aux.Valor.nome}`)
+            console.log(`URL : ${aux.Valor.url}\n`)
             aux = aux.proximo
         }
         return this.armazena_redes.ids_ja_utilizados()
@@ -620,15 +634,7 @@ class Dados_Aplicacao {
     }
 
     qtd_redes(): number {
-        let aux: No<RedeSocial> | null = this.armazena_redes.inicio
-        let qtd: number = 0
-        if (!aux) { return qtd }
-
-        while (aux) {
-            qtd++
-            aux = aux.proximo
-        }
-        return qtd
+        return this.armazena_redes.qtd
     }
 
 }
