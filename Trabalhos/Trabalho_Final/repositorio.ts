@@ -208,9 +208,7 @@ class repo_usuarios implements Repositorio_encadeado<Usuario>{
 
     autenticar(login: string, senha: string): Usuario {
         let usuario: Usuario = this.consultar_conta(login).Valor
-        if (usuario.senha != senha) {
-            throw new login_invalido("Erro, login ou senha inválidos!!!")
-        }
+        usuario.autenticar(login, senha);
         return usuario
     }
 
