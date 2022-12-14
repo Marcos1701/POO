@@ -1,4 +1,4 @@
-import { IAutenticavel, Usuario } from "./usuarios";
+import { Usuario } from "./usuarios";
 import { post_inexistente, usuario_inexistente, ValorInvalido, Valor_inexistente } from "./trata_erros";
 import { repo_post, No } from './repositorio'
 export { RedeSocial, Post }
@@ -56,7 +56,7 @@ class Post {
         return this._texto
     }
 
-    get autor(): IAutenticavel {
+    get autor(): Usuario {
         return this._autor
     }
     get curtidas(): number {
@@ -188,7 +188,6 @@ class RedeSocial {
         this.ValidarValor(id_post)
         this.posts.curtir(id_post)
     }
-
 
     visualizar_post(id: number): void {
         this.ValidarValor(id)
