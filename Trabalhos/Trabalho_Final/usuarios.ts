@@ -1,6 +1,6 @@
 import { login_invalido } from "./trata_erros"
 import { RedeSocial, Post } from "./redes_sociais"
-import { No, repo_rede_social } from './repositorio'
+import { No, repo_redes_sociais } from './repositorio'
 export { Usuario, IAutenticavel }
 
 abstract class Usuario_base {
@@ -35,18 +35,13 @@ abstract class Usuario_base {
 
 }
 
-
-
 interface IAutenticavel {
     autenticar(login: string, senha: string): boolean;
 }
 
-
-
-
 class Usuario extends Usuario_base implements IAutenticavel {
 
-    private Repositorio_de_redes_sociais: repo_rede_social = new repo_rede_social()
+    private Repositorio_de_redes_sociais: repo_redes_sociais = new repo_redes_sociais()
 
     constructor(id: number, nome: string, login: string, senha: string) {
         super(id, nome, login, senha);
@@ -96,7 +91,6 @@ class Usuario extends Usuario_base implements IAutenticavel {
         const rede: RedeSocial = this.consultar_rede_social(id_rede)
         rede.curtir_post(id_post)
     }
-
 
     alterar_post(novo_post: Post, id_rede: number): void {
         this.Repositorio_de_redes_sociais.alterar_post(id_rede, novo_post)
