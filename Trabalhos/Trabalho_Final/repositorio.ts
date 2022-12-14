@@ -9,7 +9,7 @@ import {
     usuario_nao_logado, ValorInvalido,
     usuario_ja_inserido_na_rede
 } from "./trata_erros";
-export { Dados_Aplicacao, No, repo_redes_sociais as repo_rede_social, repo_post }
+export { Dados_Aplicacao, No, repo_redes_sociais, repo_post, lista_duplamente_encadeada }
 
 interface Repositorio_encadeado<T> {
     inserir(valor: T): void;
@@ -77,23 +77,43 @@ class lista_duplamente_encadeada<T> {
         if (no_aux.Valor == valor) {
             this._inicio = no_aux.proximo
         }
-        if (!(valor instanceof Usuario || valor instanceof RedeSocial || valor instanceof Post)) {
-            throw new ValorInvalido("Erro!!")
-        }
 
-        while (no_aux) {
-            if (no_aux.id == valor.id) {
-                if (no_aux.anterior) {
-                    no_aux.anterior.proximo = no_aux.proximo
+        if (valor instanceof Usuario || valor instanceof RedeSocial || valor instanceof Post) {
+
+            while (no_aux) {
+                if (no_aux.id == valor.id) {
+                    if (no_aux.anterior) {
+                        no_aux.anterior.proximo = no_aux.proximo
+                    }
+                    if (no_aux.proximo) {
+                        no_aux.proximo.anterior = no_aux.anterior
+                    }
+                    if (no_aux == this._fim) {
+                        this._fim = no_aux.anterior
+                    }
+                    break
                 }
-                if (no_aux.proximo) {
-                    no_aux.proximo.anterior = no_aux.anterior
-                }
-                if (no_aux == this._fim) {
-                    this._fim = no_aux.anterior
-                }
-                break
             }
+        } else if (!isNaN(Number(valor))) {
+
+
+            while (no_aux) {
+                if (no_aux.Valor == valor) {
+                    if (no_aux.anterior) {
+                        no_aux.anterior.proximo = no_aux.proximo
+                    }
+                    if (no_aux.proximo) {
+                        no_aux.proximo.anterior = no_aux.anterior
+                    }
+                    if (no_aux == this._fim) {
+                        this._fim = no_aux.anterior
+                    }
+                    break
+                }
+            }
+
+        } else {
+            throw new ValorInvalido("Erro!!")
         }
     }
 
@@ -379,7 +399,6 @@ class repo_redes_sociais implements Repositorio_encadeado<RedeSocial> {
             }
         }
     }
-
 
     visualizar_post(id_post: number, id: number): void {
         try {
