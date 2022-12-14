@@ -54,8 +54,8 @@ function main(): void {
 
             if (op == 3) {
                 console.log('----- Criar nova Rede Social -----')
-                const nome: string = input("Digite o nome da rede social: ")
-                const url: string = input("Digite a url da rede social: ")
+                const nome: string = coletar_valor_nao_nulo("Digite o nome da rede social: ")
+                const url: string = coletar_valor_nao_nulo("Digite a url da rede social: ")
                 let Nova_Rede_Social: RedeSocial
                 if (id_redes_excluidas.length > 0) {
                     Nova_Rede_Social = new RedeSocial(id_redes_excluidas[0], nome, url)
@@ -110,8 +110,8 @@ function main(): void {
 }
 
 function realizar_login(): void {
-    const login: string = input("Digite seu login: ")
-    const senha: string = input("Digite sua senha: ")
+    const login: string = coletar_valor_nao_nulo("Digite seu login: ")
+    const senha: string = coletar_valor_nao_nulo("Digite sua senha: ")
     repo_aplicacao.autenticar_usuario(login, senha)
 }
 
@@ -195,8 +195,8 @@ function opcoes_para_rede_social(): void {
                 console.log("Digite o id do post que deseja alterar: ")
                 const id_post: number = coletar_valor_valido(rede_social.ids_posts())
                 const post: Post = rede_social.consultar_post(id_post)
-                const texto: string = input("Digite o novo texto do post: ")
-                const legenda: string = input("Digite a nova legenda do post: ")
+                const texto: string = coletar_valor_nao_nulo("Digite o novo texto do post: ")
+                const legenda: string = coletar_valor_nao_nulo("Digite a nova legenda do post: ")
                 const novo_post: Post = new Post(id_post, texto, repo_aplicacao.usuario_logado, legenda, post.data, post.curtidas)
                 repo_aplicacao.alterar_post(novo_post, id_rede_social)
 
@@ -243,11 +243,20 @@ function opcoes_para_rede_social(): void {
     }
 }
 
+function coletar_valor_nao_nulo(mensagem: string): string {
+    let retorno: string = input(mensagem)
+    while (retorno == '' || retorno == null) {
+        console.log("Ops, este campo não pode ser nulo, insira algo!!")
+        retorno = input(mensagem)
+    }
+    return retorno
+}
+
 function criar_post(rede: RedeSocial): Post {
     if (!repo_aplicacao.logado) { throw new usuario_inexistente("Erro, você não está logado!!") }
 
-    const texto: string = input("Digite o texto do seu post: ")
-    const legenda: string = input("Digite a legenda do seu post: ")
+    const texto: string = coletar_valor_nao_nulo("Digite o texto do seu post: ")
+    const legenda: string = coletar_valor_nao_nulo("Digite a legenda do seu post: ")
 
     const post: Post = new Post(rede.id_post, texto, repo_aplicacao.usuario_logado, legenda, new Date())
     return post
@@ -267,7 +276,7 @@ function curtir_post(id_rede_social: number): void {
 }
 
 function visualizar_post(rede_social: RedeSocial): void {
-    const id_post: number = Number(input("Digite o id do post que deseja visualizar: "))
+    const id_post: number = Number(coletar_valor_nao_nulo("Digite o id do post que deseja visualizar: "))
     rede_social.visualizar_post(id_post)
 }
 
@@ -317,9 +326,9 @@ function exibir_opcoes_e_coletar_retorno(aba: string, opcoes: string[]): number 
 
 function criar_usuario(id: number): void {
     console.log('----- Criar novo Usuário -----\n')
-    const nome: string = input("Digite seu nome de usuário: ")
-    const login: string = input("Digite seu login: ")
-    const senha: string = input("Digite sua senha: ")
+    const nome: string = coletar_valor_nao_nulo("Digite seu nome de usuário: ")
+    const login: string = coletar_valor_nao_nulo("Digite seu login: ")
+    const senha: string = coletar_valor_nao_nulo("Digite sua senha: ")
 
     const Novo_Usuario: Usuario = new Usuario(id, nome, login, senha)
     repo_aplicacao.inserir_usuario(Novo_Usuario)
