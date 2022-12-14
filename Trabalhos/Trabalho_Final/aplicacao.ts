@@ -3,7 +3,8 @@ import { Usuario } from './usuarios'
 import {
     login_invalido, post_invalido, post_inexistente,
     post_ja_criado, rede_social_inexistente, ValorInvalido,
-    usuario_inexistente, rede_social_ja_cadastrada
+    usuario_inexistente, rede_social_ja_cadastrada,
+    sem_opcoes_error
 } from './trata_erros'
 import { Dados_Aplicacao } from './repositorio'
 import Prompt from 'prompt-sync'
@@ -45,6 +46,7 @@ function main(): void {
                 }
                 realizar_login()
                 console.log(`\nOlá ${repo_aplicacao.usuario_logado.nome}, Seja Bem Vindo!!\n`)
+                usuario_ja_logado = true
 
                 opcoes = ['1 - criar novo Usuário', '2 - Realizar Login de usuário', '3 - Criar nova rede Social',
                     '4 - excluir rede social', '5 - excluir usuario', '6 - Opções de usuario', '7 - deslogar', '0 - Sair']
@@ -87,13 +89,14 @@ function main(): void {
             if (op == 7) {
                 repo_aplicacao.deslogar_usuario()
                 opcoes = ['1 - criar novo Usuário', '2 - Realizar Login de usuário', '3 - Criar nova rede Social', '4 - excluir rede social', '0 - Sair']
+                usuario_ja_logado = false
             }
 
 
         } catch (e: any) {
             if (e instanceof login_invalido || e instanceof post_invalido ||
                 e instanceof post_inexistente || e instanceof post_ja_criado ||
-                e instanceof rede_social_inexistente) {
+                e instanceof rede_social_inexistente || e instanceof sem_opcoes_error) {
                 console.log(`${e.message}\n\n`)
             } else {
                 console.log("Ops, ocorreu um erro inesperado, favor contate o Administrador mais proximo!!")
@@ -171,6 +174,7 @@ function opcoes_para_rede_social(): void {
             if (op_rede_social == 2) {
                 curtir_post(id_rede_social)
             }
+
             if (op_rede_social == 3) {
                 console.log("------ Excluir Post -----")
                 if (rede_social.qtd_posts() <= 0) { throw new post_inexistente("Ops, não há posts para excluir!!") }
@@ -268,6 +272,7 @@ function visualizar_post(rede_social: RedeSocial): void {
 }
 
 function coletar_valor_valido(opcoes_validas: number[]): number {
+    if (opcoes_validas.length == 0) { throw new sem_opcoes_error("Ops, não há opções válidas para essa aba..") }
     let opcao: number = Number(input("=> "))
     const opcao_valida = (opcoes_validas: number[], opcao_selecionada: number) => {
         for (let i = 0; i < opcoes_validas.length; i++) {
@@ -279,13 +284,14 @@ function coletar_valor_valido(opcoes_validas: number[]): number {
     }
 
     while (!opcao_valida(opcoes_validas, opcao)) {
-        console.log(`A opção: ${opcao} é inválida, selecione uma opção válida detre as a seguir: `)
+        console.log(`A opção: ${opcao} é inválida, selecione uma opção válida dentre as a seguir: `)
         opcao = Number(input("=> "))
     }
     return opcao
 }
 
 function exibir_opcoes_e_coletar_retorno(aba: string, opcoes: string[]): number {
+    if (opcoes.length == 0) { throw new sem_opcoes_error("Ops, não há opções válidas para essa aba..") }
 
     console.log(`--------------------- ${aba} ---------------------`)
 
@@ -301,7 +307,7 @@ function exibir_opcoes_e_coletar_retorno(aba: string, opcoes: string[]): number 
     let opcao: number = Number(input("=> "))
 
     while (opcao < 0 || opcao > opcoes.length) {
-        console.log(`A opção: ${opcao} é inválida, selecione uma opção válida detre as a seguir: `)
+        console.log(`A opção: ${opcao} é inválida, selecione uma opção válida dentre as a seguir: `)
         exibir(opcoes)
         console.log("Digite a opção desejada a seguir: ")
         opcao = Number(input("=> "))
