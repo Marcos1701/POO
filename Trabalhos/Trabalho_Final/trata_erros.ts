@@ -88,6 +88,14 @@ class usuario_ja_inserido_na_rede extends ErroApp {
     }
 }
 
+
+class sem_opcoes_error extends ErroApp {
+    constructor(msg: string) {
+        super(msg);
+    }
+}
+
+
 export {
     login_invalido, post_invalido,
     post_inexistente, post_ja_criado,
@@ -95,5 +103,6 @@ export {
     rede_social_ja_cadastrada, Valor_inexistente,
     erro_inesperado, usuario_inexistente,
     usuario_ja_criado, usuario_invalido,
-    usuario_nao_logado, usuario_ja_inserido_na_rede
+    usuario_nao_logado, usuario_ja_inserido_na_rede,
+    sem_opcoes_error
 }
